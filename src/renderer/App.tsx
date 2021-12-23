@@ -1,7 +1,6 @@
 import {
   Button,
   ChakraProvider,
-  Divider,
   Heading,
   Input,
   InputGroup,
