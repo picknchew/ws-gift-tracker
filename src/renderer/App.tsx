@@ -1,12 +1,4 @@
-import {
-  Button,
-  ChakraProvider,
-  Heading,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Stack,
-} from '@chakra-ui/react';
+import { Button, ChakraProvider, Heading, Input, InputGroup, InputRightElement, Stack } from '@chakra-ui/react';
 import React from 'react';
 import { MemoryRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
