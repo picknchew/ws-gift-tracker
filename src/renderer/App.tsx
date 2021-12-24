@@ -4,7 +4,6 @@ import AuthContext from './context/AuthContext';
 import { useProvideAuth } from './hooks/useAuth';
 import Login from './pages/Login';
 import Main from './pages/Main';
-import './App.css';
 
 export default function App() {
   const auth = useProvideAuth();
