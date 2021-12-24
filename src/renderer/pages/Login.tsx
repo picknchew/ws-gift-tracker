@@ -1,11 +1,4 @@
-import {
-  Button,
-  Heading,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Stack,
-} from '@chakra-ui/react';
+import { Button, Heading, Input, InputGroup, InputRightElement, Stack } from '@chakra-ui/react';
 import { useState } from 'react';
 
 const Login = () => {
