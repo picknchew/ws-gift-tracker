@@ -33,15 +33,15 @@ const login = async (username: string, password: string, otp?: string) => {
       { headers }
     );
   } catch (error) {
-    return LoginResponse.UnknownError;
-  }
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      if (error.response.headers['x-wealthsimple-otp-required'] === 'true') {
+        return LoginResponse.RequireOTP;
+      }
 
-  if (res.status === 401) {
-    if (res.data['x-wealthsimple-otp-required'] === 'true') {
-      return LoginResponse.RequireOTP;
+      return LoginResponse.WrongCredentials;
     }
 
-    return LoginResponse.WrongCredentials;
+    return LoginResponse.UnknownError;
   }
 
   axios.defaults.headers.common.Authorization = `${res.data.token_type} ${res.data.access_token}`;
