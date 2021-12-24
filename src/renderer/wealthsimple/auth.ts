@@ -29,7 +29,7 @@ const login = async (username: string, password: string, otp?: string) => {
     res = await axios.post(
       authEndpoint,
       {
-        grant_type: password,
+        grant_type: 'password',
         scope: 'invest.read invest.write trade.read',
         username,
         password,
