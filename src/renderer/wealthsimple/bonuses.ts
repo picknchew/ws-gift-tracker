@@ -1,5 +1,5 @@
 import axios, { AxiosRequestHeaders } from 'axios';
-import { P2PReferralsv2 } from 'renderer/typings';
+import { Referralsv2QueryResponse } from 'renderer/typings';
 
 const bonusEndpoint = 'https://api-legacy.wealthsimple.com/graphql';
 
@@ -40,7 +40,7 @@ fragment Referralv2 on P2PReferralv2 {
 const queryBonuses = async () => {
   const headers: AxiosRequestHeaders = { 'Content-Type': 'application/json', Accept: 'application/json' };
 
-  const res = await axios.post<P2PReferralsv2>(
+  const res = await axios.post<Referralsv2QueryResponse>(
     bonusEndpoint,
     {
       operationName: 'Referralsv2Query',

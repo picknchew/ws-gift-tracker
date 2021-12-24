@@ -1,4 +1,5 @@
 import axios, { AxiosRequestHeaders } from 'axios';
+import { CashClientDashboardResponse } from 'renderer/typings';
 
 const dashboardEndpoint = 'https://api-legacy.wealthsimple.com/graphql';
 
@@ -102,7 +103,7 @@ fragment AmlRecords on Client {
 const queryDashboard = async (clientId: string) => {
   const headers: AxiosRequestHeaders = { 'Content-Type': 'application/json', Accept: 'application/json' };
 
-  const res = await axios.post(
+  const res = await axios.post<CashClientDashboardResponse>(
     dashboardEndpoint,
     {
       operationName: 'CashClientDashboard',

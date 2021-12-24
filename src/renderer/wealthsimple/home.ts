@@ -1,4 +1,5 @@
 import axios, { AxiosRequestHeaders } from 'axios';
+import { OnboardedHomeResponse } from 'renderer/typings';
 
 const homeEndpoint = 'https://api-legacy.wealthsimple.com/graphql';
 
@@ -45,7 +46,7 @@ fragment Profile on P2PProfile {
 const queryHome = async () => {
   const headers: AxiosRequestHeaders = { 'Content-Type': 'application/json', Accept: 'application/json' };
 
-  const res = await axios.post(
+  const res = await axios.post<OnboardedHomeResponse>(
     homeEndpoint,
     {
       operationName: 'OnboardedHome',
