@@ -14,3 +14,33 @@ export enum LoginResponse {
   WrongCredentials,
   SUCCESS,
 }
+
+export enum QueryResponse {
+  UnknownError,
+  RequireAuthentication,
+}
+
+/** Referralsv2Query */
+export type OpposingUserProfile = {
+  id: string;
+  handle: string;
+  __typename: string;
+};
+
+export interface Referralv2 {
+  __typename: string;
+  id: string;
+  payoutAmount: number;
+  payoutTriggeredAt: string;
+  type: string;
+  promoCode: string;
+  category: string;
+  opposingUserProfile: OpposingUserProfile;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface P2PReferralsv2 {
+  __typename: string;
+  referrals: Array<Referralv2>;
+}
