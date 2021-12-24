@@ -107,20 +107,48 @@ export interface OnboardedHomeResponse {
 }
 
 /** CashClientDashboard */
-export interface AmlRecordResult {
+export interface AmlRecord {
   __typename: string;
   status: string;
   requiredDocumentsCount: number;
   requiredDocumentTypes: Array<string>;
 }
-export interface AmlRecord {
+
+export interface AmlRecords {
   __typename: string;
-  results: Array<AmlRecordResult>;
+  results: Array<AmlRecord>;
+}
+
+export interface Account {
+  id: string;
+  nickname: string;
+  type: string;
+  investNetLiquidationAmount: number;
+  currency: string;
+  signedAgreements: Array<{
+    id: string;
+    className: string;
+    __typename: string;
+  }>;
+  cashAccount: {
+    status: string;
+    balance: number;
+    spendingBalance: number;
+    withdrawalBalance: number;
+    __typename: string;
+  };
+  custodianAccounts: Array<{
+    id: string;
+    custodianAccountId: string;
+    status: string;
+    __typename: string;
+  }>;
+  __typename: string;
 }
 
 export interface CashClient {
   __typename: string;
-  amlRecords: Array<AmlRecord>;
+  amlRecords: AmlRecords;
   id: string;
   created_at: string;
   jurisdiction: string;
@@ -131,8 +159,8 @@ export interface CashClient {
   }>;
   onboarding: {
     states: Array<{
-      kyc_application: unknown;
-      email_confirmation: unknown;
+      kyc_application: string;
+      email_confirmation: string;
       __typename: string;
     }>;
     __typename: string;
@@ -150,30 +178,13 @@ export interface CashClient {
     };
     __typename: string;
   };
-  accounts: {
+  p2pProfile: P2PProfile;
+  accounts: Array<Account>;
+  spend: {
     id: string;
-    nickname: string;
-    type: string;
-    investNetLiquidationAmount: number;
-    currency: string;
-    signedAgreements: Array<{
-      id: string;
-      className: string;
-      __typename: string;
-    }>;
-    cashAccount: {
-      status: string;
-      balance: string;
-      spendingBalance: string;
-      withdrawalBalance: string;
-      __typename: string;
-    };
-    custodianAccounts: Array<{
-      id: string;
-      custodianAccountId: string;
-      status: string;
-      __typename: string;
-    }>;
+    status: string;
+    eligibleForSpend: boolean;
+    eligibleForCardDrop: boolean;
     __typename: string;
   };
 }
