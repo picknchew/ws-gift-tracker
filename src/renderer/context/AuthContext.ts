@@ -1,9 +1,9 @@
 import { createContext } from 'react';
-import { AuthContextInterface } from 'renderer/typings';
+import { AuthContextInterface, LoginResponse } from 'renderer/typings';
 
 const AuthContext = createContext<AuthContextInterface>({
   isAuth: false,
-  signIn: async () => false,
+  signIn: async () => LoginResponse.UnknownError,
 });
 
 export default AuthContext;

@@ -1,14 +1,8 @@
 import axios, { AxiosRequestHeaders } from 'axios';
+import { LoginResponse } from 'renderer/typings';
 
 const authEndpoint = 'https://api.production.wealthsimple.com/v1/oauth/token';
 const versionEndpoint = 'https://api-legacy.wealthsimple.com/cash-mobile/version-manifest';
-
-enum LoginResponse {
-  UnknownError,
-  RequireOTP,
-  WrongCredentials,
-  SUCCESS,
-}
 
 // call on startup to replicate app behaviour
 const getVersionManifest = async () => {
