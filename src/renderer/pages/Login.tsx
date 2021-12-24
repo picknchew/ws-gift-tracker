@@ -1,4 +1,4 @@
-import { Button, Heading, Input, InputGroup, InputRightElement, Stack } from '@chakra-ui/react';
+import { Box, Button, Heading, Input, InputGroup, InputRightElement, Stack } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useAuth } from 'renderer/hooks/useAuth';
 import { useHistory } from 'react-router';
@@ -17,7 +17,7 @@ const Login = () => {
   };
 
   return (
-    <>
+    <Box maxW="24rem" m="auto">
       <Heading mb="10px">Login to Wealthsimple</Heading>
 
       <Stack spacing={3}>
@@ -36,7 +36,7 @@ const Login = () => {
           Sign in
         </Button>
       </Stack>
-    </>
+    </Box>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, TableCaption } from '@chakra-ui/react';
 import { Gifter } from 'renderer/typings';
 
 const sampleData: Array<Gifter> = [
