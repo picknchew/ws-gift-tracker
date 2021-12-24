@@ -1,5 +1,6 @@
 import { Table, Thead, Tbody, Tr, Th, Td, TableCaption } from '@chakra-ui/react';
 import { Gifter } from 'renderer/typings';
+import timeSince from 'renderer/utils/timeSince';
 
 const sampleData: Array<Gifter> = [
   {
@@ -16,19 +17,19 @@ const sampleData: Array<Gifter> = [
   },
   {
     username: 'asdasd',
-    lastSent: '2021-12-24 23:12:54',
+    lastSent: '2021-12-19 23:12:54',
   },
   {
     username: 'fdsfds2',
-    lastSent: '2021-12-25 12:09:43',
+    lastSent: '2021-12-22 12:09:43',
   },
   {
     username: 'asdasd3',
-    lastSent: '2021-12-26 23:12:54',
+    lastSent: '2021-12-17 23:12:54',
   },
   {
     username: 'fdsfds4',
-    lastSent: '2021-12-27 12:09:43',
+    lastSent: '2021-12-18 12:09:43',
   },
 ];
 
@@ -40,6 +41,7 @@ const GiftList = () => {
         <Tr>
           <Th>Username</Th>
           <Th>Last sent</Th>
+          <Th>Time since</Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -47,6 +49,7 @@ const GiftList = () => {
           <Tr key={gifter.username}>
             <Td>{gifter.username}</Td>
             <Td>{gifter.lastSent}</Td>
+            <Td>{timeSince(new Date(gifter.lastSent))}</Td>
           </Tr>
         ))}
       </Tbody>
