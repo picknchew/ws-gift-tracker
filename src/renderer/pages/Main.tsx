@@ -1,5 +1,7 @@
+import GiftList from 'renderer/components/GiftList';
+
 const Main = () => {
-  return <div>main here</div>;
+  return <GiftList />;
 };
 
 export default Main;
