@@ -1,4 +1,4 @@
-import axios, { AxiosRequestHeaders } from 'axios';
+import axios, { AxiosError, AxiosRequestHeaders } from 'axios';
 import { LoginResponse } from 'renderer/typings';
 
 const authEndpoint = 'https://api.production.wealthsimple.com/v1/oauth/token';
@@ -6,7 +6,7 @@ const versionEndpoint = 'https://api-legacy.wealthsimple.com/cash-mobile/version
 
 // call on startup to replicate app behaviour
 const getVersionManifest = async () => {
-  axios.get(versionEndpoint, { withCredentials: true });
+  axios.get(versionEndpoint);
 };
 
 const login = async (username: string, password: string, otp?: string) => {
