@@ -13,12 +13,12 @@ export default function App() {
     <ChakraProvider>
       <AuthContext.Provider value={auth}>
         <GlobalLayout>
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/app" component={Main} />
-          </Switch>
-        </Router>
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route exact path="/app" component={Main} />
+            </Switch>
+          </Router>
         </GlobalLayout>
       </AuthContext.Provider>
     </ChakraProvider>
