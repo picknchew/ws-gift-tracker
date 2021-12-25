@@ -23,12 +23,12 @@ export const getNextGiftsToSend = (gifters: Array<Referralv2>, count = 10): Arra
 };
 
 /**
- * Calculates the total payout from gifts since a given date. Defaults to 12 AM of today.
+ * Calculates the total payout from gifts and # of gifts since a given date. Defaults to 12 AM of today.
  * @param {Array<Referralv2>} gifters array of gift information
  * @param {Date} startFrom the date to start counting from
- * @returns {number} the total payout since startFrom in cents
+ * @returns {{payout: number; numGifts: number;}} an object containing payout in cents and number of gifts
  */
-export const getPayoutFromGifts = (gifters: Array<Referralv2>, startFrom?: Date) => {
+export const getPayoutFromGifts = (gifters: Array<Referralv2>, startFrom?: Date): { payout: number; numGifts: number } => {
   const start = startFrom ?? new Date();
   // default value of startFrom is 12 AM of today
   if (!startFrom) {
@@ -36,6 +36,7 @@ export const getPayoutFromGifts = (gifters: Array<Referralv2>, startFrom?: Date)
   }
 
   let payout = 0;
+  let numGifts = 0;
   let i = 0;
 
   while (i < gifters.length) {
@@ -43,9 +44,10 @@ export const getPayoutFromGifts = (gifters: Array<Referralv2>, startFrom?: Date)
     // if the payout was triggered after start, add to the total
     if (gifters[i].category === 'payment_gift' && payoutTime.getTime() >= start.getTime()) {
       payout += gifters[i].payoutAmount;
+      numGifts += 1;
     }
     i += 1;
   }
 
-  return payout;
+  return { payout, numGifts };
 };

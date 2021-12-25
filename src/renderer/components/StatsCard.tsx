@@ -11,7 +11,7 @@ const StatsCard = (props: StatsCardProps) => {
         {label}
       </Box>
       <HStack spacing="3">
-        <Circle flexShrink={0} size="6" bg={accentColor} color="white">
+        <Circle flexShrink={0} size="8" bg={accentColor} color="white">
           {icon}
         </Circle>
         <Heading as="h1" size="xl" fontWeight="bold">

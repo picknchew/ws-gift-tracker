@@ -48,7 +48,7 @@ export interface StatsCardProps {
   accentColor: string;
   data: {
     label: string;
-    value: string;
+    value: string | number;
   };
 }
 
