@@ -1,5 +1,5 @@
 import axios, { AxiosRequestHeaders } from 'axios';
-import { CashClientDashboardResponse } from 'renderer/typings';
+import { CashClientDashboardResponse } from 'main/typings';
 
 const dashboardEndpoint = 'https://api-legacy.wealthsimple.com/graphql';
 

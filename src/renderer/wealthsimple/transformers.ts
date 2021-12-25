@@ -1,11 +1,11 @@
-import { Gifter, Referralv2 } from 'renderer/typings';
+import { Gifter, Referralv2 } from 'main/typings';
 import timeSince from 'renderer/utils/timeSince';
 
 export const getNextGiftsToSend = (gifters: Array<Referralv2>, count = 10): Array<Gifter> => {
   const readyToSend = [];
   let i = 0;
 
-  while (readyToSend.length < count) {
+  while (readyToSend.length < count && i < gifters.length) {
     const payoutTime = new Date(gifters[i].payoutTriggeredAt);
     const now = new Date();
     // if the payout was triggered more than 24 hours ago, add to the list

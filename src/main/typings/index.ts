@@ -41,7 +41,9 @@ export interface Referralv2 {
 }
 
 export interface Referralsv2QueryResponse {
-  p2pReferralsv2: Array<Referralv2>;
+  data: {
+    p2pReferralsv2: Array<Referralv2>;
+  };
 }
 
 /** OnboardedHome */

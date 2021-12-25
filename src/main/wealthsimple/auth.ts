@@ -1,5 +1,5 @@
-import axios, { AxiosError, AxiosRequestHeaders } from 'axios';
-import { LoginResponse } from 'renderer/typings';
+import axios, { AxiosRequestHeaders } from 'axios';
+import { LoginResponse } from '../typings';
 
 const authEndpoint = 'https://api.production.wealthsimple.com/v1/oauth/token';
 const versionEndpoint = 'https://api-legacy.wealthsimple.com/cash-mobile/version-manifest';

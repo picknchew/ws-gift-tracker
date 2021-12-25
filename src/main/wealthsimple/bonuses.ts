@@ -1,5 +1,5 @@
 import axios, { AxiosRequestHeaders } from 'axios';
-import { Referralsv2QueryResponse } from 'renderer/typings';
+import { Referralsv2QueryResponse } from 'main/typings';
 
 const bonusEndpoint = 'https://api-legacy.wealthsimple.com/graphql';
 

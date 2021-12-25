@@ -1,5 +1,5 @@
 import axios, { AxiosRequestHeaders } from 'axios';
-import { OnboardedHomeResponse } from 'renderer/typings';
+import { OnboardedHomeResponse } from 'main/typings';
 
 const homeEndpoint = 'https://api-legacy.wealthsimple.com/graphql';
 

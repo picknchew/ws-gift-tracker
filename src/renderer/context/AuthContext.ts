@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { AuthContextInterface, LoginResponse } from 'renderer/typings';
+import { AuthContextInterface, LoginResponse } from 'main/typings';
 
 const AuthContext = createContext<AuthContextInterface>({
   isAuth: false,

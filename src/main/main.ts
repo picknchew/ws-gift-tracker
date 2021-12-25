@@ -16,6 +16,9 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import './wealthsimple/headers';
+import './ipcListeners';
+import { getVersionManifest } from './wealthsimple/auth';
 
 export default class AppUpdater {
   constructor() {
@@ -134,6 +137,7 @@ app.on('window-all-closed', () => {
 
 app
   .whenReady()
+  .then(() => getVersionManifest()) // WS app calls this on startup
   .then(() => {
     createWindow();
     app.on('activate', () => {

@@ -2,7 +2,7 @@ import { Box, Button, Heading, Input, InputGroup, InputRightElement, PinInput, P
 import { useState } from 'react';
 import { useAuth } from 'renderer/hooks/useAuth';
 import { useHistory } from 'react-router';
-import { LoginResponse } from 'renderer/typings';
+import { LoginResponse } from 'main/typings';
 
 const Login = () => {
   const [show, setShow] = useState(false);

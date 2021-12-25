@@ -1,10 +1,12 @@
 import { Table, Thead, Tbody, Tr, Th, Td, TableCaption } from '@chakra-ui/react';
 import { getNextGiftsToSend } from 'renderer/wealthsimple/transformers';
-import queryBonuses from 'renderer/wealthsimple/bonuses';
 import { useQuery } from 'react-query';
 
 const GiftList = () => {
-  const { isLoading, error, data } = useQuery('queryBonuses', queryBonuses);
+  const { isLoading, error, data } = useQuery('queryBonuses', async () => {
+    const res = await window.wealthsimple.queryBonuses();
+    return res.data;
+  });
 
   if (isLoading) {
     return <div>Loading gift data...</div>;
