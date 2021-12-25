@@ -16,7 +16,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { wsVersion, wsBuildNumber } from './wealthsimple/headers';
+import './wealthsimple/headers';
 import './ipcListeners';
 import { getVersionManifest } from './wealthsimple/auth';
 
@@ -74,9 +74,6 @@ const createWindow = async () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-
-  // set user agent
-  mainWindow.webContents.userAgent = `Wealthsimple Cash iOS v${wsVersion} (${wsBuildNumber})`;
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
