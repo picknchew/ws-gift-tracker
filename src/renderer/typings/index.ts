@@ -65,7 +65,7 @@ export interface P2PProfile {
 export interface Profile {
   __typename: string;
   id: string;
-  name: string;
+  name: string; // preferred name
   handle: string;
   imageUrl: string;
   color: string;
@@ -74,30 +74,30 @@ export interface Profile {
 
 export interface Contact {
   id: string;
-  identifier: string;
-  identifierType: string;
-  telephoneHash: string;
+  identifier: string | null;
+  identifierType: string | null;
+  telephoneHash: string | null;
   __typename: string;
   contactee: Profile;
 }
 
-export interface P2PContact {
-  nodes: Array<Contact>;
-  __typename: string;
-}
-
+// This describes the promo that's happening right now.
+// Usually it's just the $10 referral bonus.
 export interface P2PActivePromo {
   id: string;
-  startTime: string;
-  endTime: string;
-  payoutAmount: string;
+  startTime: string | null;
+  endTime: string | null;
+  payoutAmount: number; // in cents
   payoutTrigger: string;
   __typename: string;
 }
 
 export interface OnboardedHomeResponse {
   p2pRecentContactsTelephoneHashes: Array<string>;
-  p2pContacts: Array<P2PContact>;
+  p2pContacts: {
+    nodes: Array<Contact>;
+    __typename: string;
+  };
   p2pActivePromo: P2PActivePromo;
 }
 
