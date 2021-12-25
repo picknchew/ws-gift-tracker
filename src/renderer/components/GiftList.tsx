@@ -1,21 +1,9 @@
 import { VStack, Table, Thead, Tbody, Tr, Th, Td, TableCaption, Button } from '@chakra-ui/react';
-import { Gifter, ResultType } from 'main/typings';
+import { GiftListProps, ResultType } from 'main/typings';
 import Result from './Result';
 import LoadingIndicator from './LoadingIndicator';
 
-const GiftList = ({
-  data,
-  error,
-  isLoading,
-  isRefetching,
-  refetch,
-}: {
-  data: Array<Gifter>;
-  error: unknown;
-  isLoading: boolean;
-  isRefetching: boolean;
-  refetch: () => void;
-}) => {
+const GiftList = ({ data, error, isLoading, isRefetching, refetch }: GiftListProps) => {
   if (isLoading) {
     return <LoadingIndicator />;
   }

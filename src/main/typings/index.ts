@@ -9,6 +9,14 @@ export type Gifter = {
   timestamp: string;
 };
 
+export interface GiftListProps {
+  data: Array<Gifter>;
+  error: unknown;
+  isLoading: boolean;
+  isRefetching: boolean;
+  refetch: () => void;
+}
+
 export enum ResultType {
   SUCCESS,
   ERROR,
