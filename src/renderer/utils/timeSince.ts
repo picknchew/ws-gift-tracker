@@ -16,7 +16,7 @@ const timeSince = (date: Date) => {
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return `${interval} hours`;
+    return `${interval} hours ${Math.floor((seconds - interval * 3600) / 60)} minutes`;
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {

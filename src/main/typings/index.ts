@@ -6,6 +6,7 @@ export interface AuthContextInterface {
 export type Gifter = {
   handle: string;
   timeSinceLastSent: string;
+  timestamp: string;
 };
 
 export enum LoginResponse {

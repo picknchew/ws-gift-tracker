@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 const GiftList = () => {
   const { isLoading, error, data } = useQuery('queryBonuses', async () => {
     const res = await window.wealthsimple.queryBonuses();
-    return res.data;
+    return getNextGiftsToSend(res.data.p2pReferralsv2);
   });
 
   if (isLoading) {
@@ -26,13 +26,15 @@ const GiftList = () => {
       <Thead>
         <Tr>
           <Th>Username</Th>
+          <Th>Timestamp</Th>
           <Th>Time since</Th>
         </Tr>
       </Thead>
       <Tbody>
-        {getNextGiftsToSend(data.p2pReferralsv2).map((gifter) => (
+        {data.map((gifter) => (
           <Tr key={gifter.handle}>
             <Td>{gifter.handle}</Td>
+            <Td>{new Date(gifter.timestamp).toLocaleString()}</Td>
             <Td>{gifter.timeSinceLastSent}</Td>
           </Tr>
         ))}
