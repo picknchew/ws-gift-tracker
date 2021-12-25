@@ -30,23 +30,18 @@ export type OpposingUserProfile = {
 export interface Referralv2 {
   __typename: string;
   id: string;
-  payoutAmount: number;
+  payoutAmount: number; // in cents
   payoutTriggeredAt: string;
   type: string;
-  promoCode: string;
+  promoCode: string | null;
   category: string;
   opposingUserProfile: OpposingUserProfile;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface P2PReferralsv2 {
-  __typename: string;
-  referrals: Array<Referralv2>;
-}
-
 export interface Referralsv2QueryResponse {
-  p2pReferralsv2: P2PReferralsv2;
+  p2pReferralsv2: Array<Referralv2>;
 }
 
 /** OnboardedHome */
