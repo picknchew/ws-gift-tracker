@@ -4,8 +4,8 @@ export interface AuthContextInterface {
 }
 
 export type Gifter = {
-  username: string;
-  lastSent: string;
+  handle: string;
+  timeSinceLastSent: string;
 };
 
 export enum LoginResponse {
@@ -34,8 +34,8 @@ export interface Referralv2 {
   payoutTriggeredAt: string;
   type: string;
   promoCode: string | null;
-  category: string;
-  opposingUserProfile: OpposingUserProfile;
+  category: string | null;
+  opposingUserProfile: OpposingUserProfile | null;
   createdAt: string;
   updatedAt: string;
 }
