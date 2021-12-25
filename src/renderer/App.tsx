@@ -6,6 +6,7 @@ import { useProvideAuth } from './hooks/useAuth';
 import GlobalLayout from './layouts/GlobalLayout';
 import Login from './pages/Login';
 import Main from './pages/Main';
+import './wealthsimple/headers';
 
 const queryClient = new QueryClient({
   defaultOptions: {
