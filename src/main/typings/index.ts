@@ -10,7 +10,7 @@ export type Gifter = {
 };
 
 export interface GiftListProps {
-  data: Array<Gifter>;
+  data: Array<Referralv2>;
   error: unknown;
   isLoading: boolean;
   isRefetching: boolean;

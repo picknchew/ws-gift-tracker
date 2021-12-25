@@ -2,12 +2,11 @@ import { Grid, GridItem } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
 import GiftList from 'renderer/components/GiftList';
 import StatsHeader from 'renderer/components/StatsHeader';
-import { getNextGiftsToSend } from 'renderer/wealthsimple/transformers';
 
 const Main = () => {
   const bonusesQuery = useQuery('queryBonuses', async () => {
     const res = await window.wealthsimple.queryBonuses();
-    return getNextGiftsToSend(res.data.p2pReferralsv2);
+    return res.data.p2pReferralsv2;
   });
 
   return (

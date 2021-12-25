@@ -1,5 +1,6 @@
 import { VStack, Table, Thead, Tbody, Tr, Th, Td, TableCaption, Button } from '@chakra-ui/react';
 import { GiftListProps, ResultType } from 'main/typings';
+import { getNextGiftsToSend } from 'renderer/wealthsimple/transformers';
 import Result from './Result';
 import LoadingIndicator from './LoadingIndicator';
 
@@ -28,7 +29,7 @@ const GiftList = ({ data, error, isLoading, isRefetching, refetch }: GiftListPro
           </Tr>
         </Thead>
         <Tbody>
-          {data.map((gifter) => (
+          {getNextGiftsToSend(data).map((gifter) => (
             <Tr key={gifter.handle}>
               <Td>{gifter.handle}</Td>
               <Td>{new Date(gifter.timestamp).toLocaleString()}</Td>
