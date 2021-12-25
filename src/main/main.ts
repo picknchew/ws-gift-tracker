@@ -75,23 +75,6 @@ const createWindow = async () => {
     },
   });
 
-  // disable CORS policy
-  mainWindow.webContents.session.webRequest.onBeforeSendHeaders({ urls: ['*://*.wealthsimple.com/*'] }, (details, callback) => {
-    details.requestHeaders.Origin = '*';
-    callback({ requestHeaders: details.requestHeaders });
-  });
-
-  mainWindow.webContents.session.webRequest.onHeadersReceived({ urls: ['*://api-legacy.wealthsimple.com/*'] }, (details, callback) => {
-    if (!details.responseHeaders) {
-      details.responseHeaders = {};
-    }
-
-    details.responseHeaders['Access-Control-Allow-Origin'] = ['*'];
-    details.responseHeaders['Access-Control-Allow-Credentials'] = ['true'];
-
-    callback({ responseHeaders: details.responseHeaders });
-  });
-
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
   mainWindow.on('ready-to-show', () => {
