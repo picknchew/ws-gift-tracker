@@ -49,4 +49,28 @@ const login = async (username: string, password: string, otp?: string) => {
   return LoginResponse.SUCCESS;
 };
 
-export { login, getVersionManifest };
+export interface TokenInfo {
+  authenticated: boolean;
+  expiresIn: number; // in seconds
+}
+
+// call to get info about saved session
+const getTokenInfo = async (): Promise<TokenInfo> => {
+  let res;
+
+  try {
+    res = await axios.get(`${authEndpoint}/info`);
+  } catch (error) {
+    return {
+      authenticated: false,
+      expiresIn: 0,
+    };
+  }
+
+  return {
+    authenticated: true,
+    expiresIn: res.data.expires_in,
+  };
+};
+
+export { login, getVersionManifest, getTokenInfo };

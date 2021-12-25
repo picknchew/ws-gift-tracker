@@ -82,6 +82,7 @@ const Login = () => {
         history.push('app');
         break;
       case LoginResponse.RequireOTP:
+      case LoginResponse.WrongCredentials:
         setIsOTPInvalid(true);
         toast({
           title: 'OTP invalid',
@@ -91,19 +92,11 @@ const Login = () => {
           isClosable: true,
         });
         break;
-      case LoginResponse.WrongCredentials:
-        toast({
-          title: 'Invalid credentials',
-          description: 'Please check your input',
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        });
-        break;
       case LoginResponse.UnknownError:
+        setIsOTPInvalid(true);
         toast({
-          title: 'Unknown error',
-          description: 'Please try again later',
+          title: 'OTP invalid',
+          description: 'Try again with a valid OTP',
           status: 'error',
           duration: 3000,
           isClosable: true,
