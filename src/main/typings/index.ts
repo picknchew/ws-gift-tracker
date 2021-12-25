@@ -9,10 +9,13 @@ export type Gifter = {
   timestamp: string;
 };
 
-export interface GiftListProps {
-  data: Array<Referralv2>;
+export interface UseReactQueryComponentProps {
   error: unknown;
   isLoading: boolean;
+}
+
+export interface GiftListProps extends UseReactQueryComponentProps {
+  data: Array<Referralv2>;
   isRefetching: boolean;
   refetch: () => void;
 }
@@ -33,6 +36,11 @@ export enum LoginResponse {
 export enum QueryResponse {
   UnknownError,
   RequireAuthentication,
+}
+
+export interface StatsHeaderProps extends UseReactQueryComponentProps {
+  data: Array<Referralv2>;
+  isRefetching: boolean;
 }
 
 export interface StatsCardProps {

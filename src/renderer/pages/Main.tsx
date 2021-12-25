@@ -21,7 +21,7 @@ const Main = () => {
         />
       </GridItem>
       <GridItem rowSpan={1} colSpan={5}>
-        <StatsHeader />
+        <StatsHeader data={bonusesQuery.data ?? []} error={bonusesQuery.error} isLoading={bonusesQuery.isLoading} isRefetching={bonusesQuery.isRefetching} />
       </GridItem>
       <GridItem rowSpan={2} colSpan={5} bg="papayawhip">
         some charts here
