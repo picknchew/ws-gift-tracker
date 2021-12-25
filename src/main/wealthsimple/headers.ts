@@ -22,4 +22,27 @@ axios.defaults.headers.common['x-app-build-number'] = wsBuildNumber;
 axios.defaults.headers.common['Accept-Language'] = 'en_CA';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
+// log requests and responses to debug
+axios.interceptors.request.use(
+  (request) => {
+    console.log('\x1b[36m%s\x1b[0m', '--------Request--------\n', request, '------------------------------------');
+    return request;
+  },
+  (error) => {
+    console.log('\x1b[31m%s\x1b[0m', '--------Request ERROR--------\n', error, '------------------------------------');
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  (response) => {
+    console.log('\x1b[32m%s\x1b[0m', '--------Response--------\n', response, '------------------------------------');
+    return response;
+  },
+  (error) => {
+    console.log('\x1b[31m%s\x1b[0m', '--------Response ERROR--------\n', error, '------------------------------------');
+    return Promise.reject(error);
+  }
+);
+
 export { wsVersion, wsBuildNumber };
