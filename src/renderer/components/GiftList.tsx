@@ -1,45 +1,58 @@
-import { Table, Thead, Tbody, Tr, Th, Td, TableCaption } from '@chakra-ui/react';
-import { getNextGiftsToSend } from 'renderer/wealthsimple/transformers';
-import { useQuery } from 'react-query';
+import { VStack, Table, Thead, Tbody, Tr, Th, Td, TableCaption, Button } from '@chakra-ui/react';
+import { Gifter, ResultType } from 'main/typings';
+import Result from './Result';
+import LoadingIndicator from './LoadingIndicator';
 
-const GiftList = () => {
-  const { isLoading, error, data } = useQuery('queryBonuses', async () => {
-    const res = await window.wealthsimple.queryBonuses();
-    return getNextGiftsToSend(res.data.p2pReferralsv2);
-  });
-
+const GiftList = ({
+  data,
+  error,
+  isLoading,
+  isRefetching,
+  refetch,
+}: {
+  data: Array<Gifter>;
+  error: unknown;
+  isLoading: boolean;
+  isRefetching: boolean;
+  refetch: () => void;
+}) => {
   if (isLoading) {
-    return <div>Loading gift data...</div>;
+    return <LoadingIndicator />;
   }
 
   if (error) {
-    return <div>Error loading gift data</div>;
+    return <Result type={ResultType.ERROR} headline="Error fetching gift information" message="Couldn't get your gifts, try again." />;
   }
 
   if (!data) {
-    return <div>No gift data</div>;
+    return <Result type={ResultType.INFO} headline="No gift information" message="Couldn't find any gift information!" />;
   }
 
   return (
-    <Table variant="striped" colorScheme="pink">
-      <TableCaption placement="top">Next 10 gifts to send</TableCaption>
-      <Thead>
-        <Tr>
-          <Th>Username</Th>
-          <Th>Timestamp</Th>
-          <Th>Time since</Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        {data.map((gifter) => (
-          <Tr key={gifter.handle}>
-            <Td>{gifter.handle}</Td>
-            <Td>{new Date(gifter.timestamp).toLocaleString()}</Td>
-            <Td>{gifter.timeSinceLastSent}</Td>
+    <VStack>
+      <Table variant="striped" colorScheme="pink">
+        <TableCaption placement="top">Next 10 gifts to send</TableCaption>
+        <Thead>
+          <Tr>
+            <Th>Username</Th>
+            <Th>Timestamp</Th>
+            <Th>Time since</Th>
           </Tr>
-        ))}
-      </Tbody>
-    </Table>
+        </Thead>
+        <Tbody>
+          {data.map((gifter) => (
+            <Tr key={gifter.handle}>
+              <Td>{gifter.handle}</Td>
+              <Td>{new Date(gifter.timestamp).toLocaleString()}</Td>
+              <Td>{gifter.timeSinceLastSent}</Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+      <Button isLoading={isRefetching} onClick={refetch}>
+        Refetch
+      </Button>
+    </VStack>
   );
 };
 

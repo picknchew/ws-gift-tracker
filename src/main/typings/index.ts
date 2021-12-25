@@ -9,6 +9,12 @@ export type Gifter = {
   timestamp: string;
 };
 
+export enum ResultType {
+  SUCCESS,
+  ERROR,
+  INFO,
+}
+
 export enum LoginResponse {
   UnknownError,
   RequireOTP,
