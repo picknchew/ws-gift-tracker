@@ -35,6 +35,15 @@ export enum QueryResponse {
   RequireAuthentication,
 }
 
+export interface StatsCardProps {
+  icon: React.ReactElement;
+  accentColor: string;
+  data: {
+    label: string;
+    value: string;
+  };
+}
+
 /** Referralsv2Query */
 export type OpposingUserProfile = {
   id: string;
