@@ -5,7 +5,7 @@ import Result from './Result';
 import LoadingIndicator from './LoadingIndicator';
 
 const GiftList = ({ data, error, isLoading, isRefetching, refetch }: GiftListProps) => {
-  if (isLoading) {
+  if (isLoading || isRefetching) {
     return <LoadingIndicator />;
   }
 

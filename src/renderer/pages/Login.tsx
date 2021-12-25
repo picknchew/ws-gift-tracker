@@ -1,4 +1,18 @@
-import { Box, Button, Heading, Input, InputGroup, InputRightElement, PinInput, PinInputField, Stack, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Heading,
+  Input,
+  InputGroup,
+  InputRightElement,
+  PinInput,
+  PinInputField,
+  Stack,
+  FormControl,
+  FormLabel,
+  useToast,
+  chakra,
+} from '@chakra-ui/react';
 import { useState } from 'react';
 import { useAuth } from 'renderer/hooks/useAuth';
 import { useHistory } from 'react-router';
@@ -101,38 +115,52 @@ const Login = () => {
   };
 
   return (
-    <Box maxW="24rem" m="auto">
-      <Heading mb="10px">Login to Wealthsimple</Heading>
+    <Box maxW="md" mx="auto">
+      <Heading mb="10" textAlign="center">
+        Login to Wealthsimple
+      </Heading>
+      <chakra.form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSignIn();
+        }}
+      >
+        <Stack bg="white" spacing="6" py="8" px={{ base: '4', md: '10' }} shadow="base" rounded={{ sm: 'lg' }}>
+          <FormControl id="email">
+            <FormLabel>Email address</FormLabel>
+            <Input type="email" placeholder="Email" size="lg" onChange={(e) => setEmail(e.target.value)} />
+          </FormControl>
 
-      <Stack spacing={3}>
-        <Input placeholder="Username" size="lg" onChange={(e) => setEmail(e.target.value)} />
+          <FormControl id="password">
+            <FormLabel>Password</FormLabel>
+            <InputGroup size="lg">
+              <Input type={show ? 'text' : 'password'} placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  {show ? 'Hide' : 'Show'}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </FormControl>
 
-        <InputGroup size="lg">
-          <Input type={show ? 'text' : 'password'} placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
-              {show ? 'Hide' : 'Show'}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
+          {showOTP ? (
+            <Stack direction="row" justifyContent="space-between">
+              <PinInput otp onComplete={handleOTPSubmit} isInvalid={isOTPInvalid}>
+                <PinInputField />
+                <PinInputField />
+                <PinInputField />
+                <PinInputField />
+                <PinInputField />
+                <PinInputField />
+              </PinInput>
+            </Stack>
+          ) : null}
 
-        {showOTP ? (
-          <Stack direction="row" justifyContent="space-between">
-            <PinInput otp onComplete={handleOTPSubmit} isInvalid={isOTPInvalid}>
-              <PinInputField />
-              <PinInputField />
-              <PinInputField />
-              <PinInputField />
-              <PinInputField />
-              <PinInputField />
-            </PinInput>
-          </Stack>
-        ) : null}
-
-        <Button colorScheme="pink" variant="solid" onClick={handleSignIn} disabled={showOTP} isLoading={isLoggingIn}>
-          {showOTP ? 'Enter your OTP' : 'Sign in'}
-        </Button>
-      </Stack>
+          <Button colorScheme="pink" variant="solid" type="submit" disabled={showOTP} isLoading={isLoggingIn}>
+            {showOTP ? 'Enter your OTP' : 'Sign in'}
+          </Button>
+        </Stack>
+      </chakra.form>
     </Box>
   );
 };

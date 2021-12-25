@@ -1,15 +1,33 @@
-import { Stack, StackDivider } from '@chakra-ui/react';
+import { Stack, HStack, StackDivider, Skeleton, SkeletonCircle } from '@chakra-ui/react';
 import { StarIcon, ExternalLinkIcon, CalendarIcon, RepeatClockIcon } from '@chakra-ui/icons';
 import { getPayoutFromGifts } from 'renderer/wealthsimple/transformers';
 import { StatsHeaderProps, ResultType } from 'main/typings';
 import formatPayout from 'renderer/utils/formatPayout';
 import StatsCard from './StatsCard';
 import Result from './Result';
-import LoadingIndicator from './LoadingIndicator';
+
+const SkeletonStats = () => {
+  return (
+    <Stack mx="auto" spacing="3">
+      <Skeleton height="4" />
+      <HStack spacing="3">
+        <SkeletonCircle size="10" />
+        <Skeleton height="12" width="8rem" />
+      </HStack>
+    </Stack>
+  );
+};
 
 const StatsHeader = ({ data, error, isLoading, isRefetching }: StatsHeaderProps) => {
   if (isLoading || isRefetching) {
-    return <LoadingIndicator />;
+    return (
+      <Stack spacing="8" justify="space-between" direction="row" flexWrap="wrap" w="100%" divider={<StackDivider />}>
+        <SkeletonStats />
+        <SkeletonStats />
+        <SkeletonStats />
+        <SkeletonStats />
+      </Stack>
+    );
   }
 
   if (error) {
@@ -24,7 +42,7 @@ const StatsHeader = ({ data, error, isLoading, isRefetching }: StatsHeaderProps)
   const payoutSinceMidnight = getPayoutFromGifts(data);
 
   return (
-    <Stack spacing="8" justify="space-between" direction="row" flexWrap="wrap" divider={<StackDivider />}>
+    <Stack spacing="8" justify="space-between" direction="row" flexWrap="wrap" w="100%" divider={<StackDivider />}>
       <StatsCard accentColor="green.500" icon={<StarIcon />} data={{ label: 'Total earnings', value: formatPayout(payoutSinceEpoch.payout) }} />
       <StatsCard accentColor="orange.500" icon={<RepeatClockIcon />} data={{ label: "Today's earnings", value: formatPayout(payoutSinceMidnight.payout) }} />
       <StatsCard accentColor="cyan.500" icon={<ExternalLinkIcon />} data={{ label: 'Total gifts', value: payoutSinceEpoch.numGifts }} />
