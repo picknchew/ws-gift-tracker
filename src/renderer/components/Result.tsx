@@ -3,21 +3,21 @@ import { CloseIcon, InfoIcon, CheckCircleIcon } from '@chakra-ui/icons';
 import { ResultType } from 'main/typings';
 
 const ResultIcon = ({ type }: { type: ResultType }) => {
-  if (type === ResultType.SUCCESS) {
+  if (type === ResultType.Success) {
     return (
       <Flex flexDirection="column" justifyContent="center" alignItems="center" bg="green.500" rounded="50px" w="55px" h="55px" textAlign="center">
         <CheckCircleIcon boxSize="20px" color="white" />
       </Flex>
     );
   }
-  if (type === ResultType.INFO) {
+  if (type === ResultType.Info) {
     return (
       <Flex flexDirection="column" justifyContent="center" alignItems="center" bg="blue.500" rounded="50px" w="55px" h="55px" textAlign="center">
         <InfoIcon boxSize="20px" color="white" />
       </Flex>
     );
   }
-  if (type === ResultType.ERROR) {
+  if (type === ResultType.Error) {
     return (
       <Flex flexDirection="column" justifyContent="center" alignItems="center" bg="red.500" rounded="50px" w="55px" h="55px" textAlign="center">
         <CloseIcon boxSize="20px" color="white" />

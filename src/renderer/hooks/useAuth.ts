@@ -16,7 +16,7 @@ export const useProvideAuth = () => {
   // ... to save the user to state.
   const signIn = async (email: string, password: string, otp?: string): Promise<LoginResponse> => {
     const signInResponse = await window.wealthsimple.login(email, password, otp);
-    if (signInResponse === LoginResponse.SUCCESS) {
+    if (signInResponse === LoginResponse.Success) {
       setIsAuth(true);
     }
     return signInResponse;

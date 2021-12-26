@@ -21,16 +21,22 @@ export interface GiftListProps extends UseReactQueryComponentProps {
 }
 
 export enum ResultType {
-  SUCCESS,
-  ERROR,
-  INFO,
+  Success,
+  Error,
+  Info,
 }
 
 export enum LoginResponse {
   UnknownError,
   RequireOTP,
   WrongCredentials,
-  SUCCESS,
+  Success,
+}
+
+export enum RefreshAccessTokenResponse {
+  UnknownError,
+  InvalidRefreshToken,
+  Success,
 }
 
 export enum QueryResponse {

@@ -10,11 +10,11 @@ const GiftList = ({ data, error, isLoading, isRefetching, refetch }: GiftListPro
   }
 
   if (error) {
-    return <Result type={ResultType.ERROR} headline="Error fetching gift information" message="Couldn't get your gifts, try again." />;
+    return <Result type={ResultType.Error} headline="Error fetching gift information" message="Couldn't get your gifts, try again." />;
   }
 
   if (!data) {
-    return <Result type={ResultType.INFO} headline="No gift information" message="Couldn't find any gift information!" />;
+    return <Result type={ResultType.Info} headline="No gift information" message="Couldn't find any gift information!" />;
   }
 
   return (

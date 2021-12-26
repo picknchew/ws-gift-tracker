@@ -78,7 +78,7 @@ const Login = () => {
     const result = await signIn(email, password, otp);
     setIsLoggingIn(false);
     switch (result) {
-      case LoginResponse.SUCCESS:
+      case LoginResponse.Success:
         history.push('app');
         break;
       case LoginResponse.RequireOTP:

@@ -1,11 +1,20 @@
 import axios from 'axios';
 import randomWords from 'random-words';
-import short = require('short-uuid');
+import short from 'short-uuid';
+import store from '../store';
+
+if (!store.has('deviceId')) {
+  store.set('deviceId', short.generate());
+}
+
+if (!store.has('deviceName')) {
+  store.set('deviceName', randomWords());
+}
 
 const wsVersion = '1.46.1';
 const wsBuildNumber = '373';
-const deviceId = short.generate();
-const deviceName = randomWords();
+const deviceId = store.get('deviceId');
+const deviceName = store.get('deviceName');
 
 axios.defaults.withCredentials = true;
 

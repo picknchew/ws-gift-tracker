@@ -6,6 +6,7 @@ import { useProvideAuth } from './hooks/useAuth';
 import GlobalLayout from './layouts/GlobalLayout';
 import Login from './pages/Login';
 import Main from './pages/Main';
+import Loading from './pages/Loading';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +29,8 @@ export default function App() {
           <GlobalLayout>
             <Router>
               <Switch>
-                <Route exact path="/" component={Login} />
+                <Route exact path="/" component={Loading} />
+                <Route exact path="/login" component={Login} />
                 <Route exact path="/app" component={Main} />
               </Switch>
             </Router>
