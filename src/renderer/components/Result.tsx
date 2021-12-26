@@ -1,26 +1,26 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react';
-import { CloseIcon, InfoIcon, CheckCircleIcon } from '@chakra-ui/icons';
+import { Box, Flex, Heading, Text, Icon } from '@chakra-ui/react';
+import { MdClose, MdInfo, MdCheckCircle } from 'react-icons/md';
 import { ResultType } from 'main/typings';
 
 const ResultIcon = ({ type }: { type: ResultType }) => {
   if (type === ResultType.Success) {
     return (
       <Flex flexDirection="column" justifyContent="center" alignItems="center" bg="green.500" rounded="50px" w="55px" h="55px" textAlign="center">
-        <CheckCircleIcon boxSize="20px" color="white" />
+        <Icon as={MdCheckCircle} boxSize="20px" color="white" />
       </Flex>
     );
   }
   if (type === ResultType.Info) {
     return (
       <Flex flexDirection="column" justifyContent="center" alignItems="center" bg="blue.500" rounded="50px" w="55px" h="55px" textAlign="center">
-        <InfoIcon boxSize="20px" color="white" />
+        <Icon as={MdInfo} boxSize="20px" color="white" />
       </Flex>
     );
   }
   if (type === ResultType.Error) {
     return (
       <Flex flexDirection="column" justifyContent="center" alignItems="center" bg="red.500" rounded="50px" w="55px" h="55px" textAlign="center">
-        <CloseIcon boxSize="20px" color="white" />
+        <Icon as={MdClose} boxSize="20px" color="white" />
       </Flex>
     );
   }
