@@ -7,6 +7,7 @@ import GlobalLayout from './layouts/GlobalLayout';
 import Login from './pages/Login';
 import Main from './pages/Main';
 import Loading from './pages/Loading';
+import './App.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {

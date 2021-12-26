@@ -42,7 +42,17 @@ const StatsHeader = ({ data, error, isLoading, isRefetching }: StatsHeaderProps)
   const payoutSinceMidnight = getPayoutFromGifts(data);
 
   return (
-    <Stack spacing="2" alignItems="center" justify="space-between" direction="row" w="100%" divider={<StackDivider />}>
+    <Stack
+      spacing="4"
+      px="4"
+      alignItems="center"
+      justify="space-between"
+      direction="row"
+      w="100%"
+      divider={<StackDivider />}
+      overflowX="auto"
+      overflowY="hidden"
+    >
       <StatsCard accentColor="green.500" icon={<Icon as={FaDollarSign} />} data={{ label: 'Total earnings', value: formatPayout(payoutSinceEpoch.payout) }} />
       <StatsCard
         accentColor="yellow.500"

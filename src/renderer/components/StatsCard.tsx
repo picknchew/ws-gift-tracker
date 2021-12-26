@@ -1,4 +1,4 @@
-import { Box, Circle, Heading, HStack, Stack } from '@chakra-ui/react';
+import { Text, Circle, Heading, HStack, Stack } from '@chakra-ui/react';
 import { StatsCardProps } from 'main/typings';
 
 const StatsCard = (props: StatsCardProps) => {
@@ -7,14 +7,14 @@ const StatsCard = (props: StatsCardProps) => {
 
   return (
     <Stack mx="auto" spacing="3">
-      <Box color="gray.600" fontWeight="medium">
+      <Text color="gray.600" fontWeight="medium" whiteSpace="nowrap">
         {label}
-      </Box>
+      </Text>
       <HStack spacing="3">
         <Circle flexShrink={0} size="8" bg={accentColor} color="white">
           {icon}
         </Circle>
-        <Heading as="h1" size="xl" fontWeight="bold">
+        <Heading as="h1" size="xl" fontWeight="bold" whiteSpace="nowrap">
           {value}
         </Heading>
       </HStack>
