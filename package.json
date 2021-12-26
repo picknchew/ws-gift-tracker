@@ -251,6 +251,7 @@
     "react-dom": "^17.0.2",
     "react-query": "^3.34.6",
     "react-router-dom": "^5.3.0",
+    "recharts": "^2.1.8",
     "regenerator-runtime": "^0.13.9",
     "short-uuid": "^4.2.0",
     "ts-node": "^10.4.0"

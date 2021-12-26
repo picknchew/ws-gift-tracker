@@ -1,5 +1,6 @@
 import { Grid, GridItem } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
+import GiftCumulativeChart from 'renderer/components/GiftCumulativeChart';
 import GiftList from 'renderer/components/GiftList';
 import StatsHeader from 'renderer/components/StatsHeader';
 
@@ -10,8 +11,8 @@ const Main = () => {
   });
 
   return (
-    <Grid h="100%" templateRows="repeat(10, 1fr)" templateColumns="repeat(8, 1fr)" gap={4}>
-      <GridItem boxShadow="base" rounded="md" p="4" rowSpan={10} colSpan={3} bg="white" overflowY="scroll">
+    <Grid h="100%" templateRows="repeat(5, 1fr)" templateColumns="repeat(8, 1fr)" gap={4}>
+      <GridItem boxShadow="base" rounded="md" p="4" rowSpan={5} colSpan={3} bg="white" overflowY="scroll">
         <GiftList
           data={bonusesQuery.data ?? []}
           error={bonusesQuery.error}
@@ -20,10 +21,18 @@ const Main = () => {
           refetch={() => bonusesQuery.refetch()}
         />
       </GridItem>
-      <GridItem boxShadow="base" rounded="md" display="flex" p="4" rowSpan={2} colSpan={5} bg="white" overflow="auto">
+      <GridItem boxShadow="base" rounded="md" display="flex" p="4" rowSpan={1} colSpan={5} bg="white">
         <StatsHeader data={bonusesQuery.data ?? []} error={bonusesQuery.error} isLoading={bonusesQuery.isLoading} isRefetching={bonusesQuery.isRefetching} />
       </GridItem>
-      <GridItem boxShadow="base" rounded="md" rowSpan={8} colSpan={5} bg="papayawhip">
+      <GridItem boxShadow="base" rounded="md" rowSpan={2} colSpan={5} bg="gray.900">
+        <GiftCumulativeChart
+          data={bonusesQuery.data ?? []}
+          error={bonusesQuery.error}
+          isLoading={bonusesQuery.isLoading}
+          isRefetching={bonusesQuery.isRefetching}
+        />
+      </GridItem>
+      <GridItem boxShadow="base" rounded="md" rowSpan={2} colSpan={5} bg="white">
         some charts here
       </GridItem>
     </Grid>

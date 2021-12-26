@@ -14,6 +14,11 @@ export interface UseReactQueryComponentProps {
   isLoading: boolean;
 }
 
+export interface GiftCumulativeChartProps extends UseReactQueryComponentProps {
+  data: Array<Referralv2>;
+  isRefetching: boolean;
+}
+
 export interface GiftListProps extends UseReactQueryComponentProps {
   data: Array<Referralv2>;
   isRefetching: boolean;
