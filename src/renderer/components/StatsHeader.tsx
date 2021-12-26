@@ -11,8 +11,8 @@ const SkeletonStats = () => {
     <Stack mx="auto" spacing="3">
       <Skeleton height="4" />
       <HStack spacing="3">
-        <SkeletonCircle size="10" />
-        <Skeleton height="12" width="8rem" />
+        <SkeletonCircle size="8" />
+        <Skeleton height="8" width="8rem" />
       </HStack>
     </Stack>
   );
@@ -21,7 +21,17 @@ const SkeletonStats = () => {
 const StatsHeader = ({ data, error, isLoading, isRefetching }: StatsHeaderProps) => {
   if (isLoading || isRefetching) {
     return (
-      <Stack spacing="8" justify="space-between" direction="row" flexWrap="wrap" w="100%" divider={<StackDivider />}>
+      <Stack
+        spacing="4"
+        px="4"
+        alignItems="center"
+        justify="space-between"
+        direction="row"
+        w="100%"
+        divider={<StackDivider />}
+        overflowX="auto"
+        overflowY="hidden"
+      >
         <SkeletonStats />
         <SkeletonStats />
         <SkeletonStats />

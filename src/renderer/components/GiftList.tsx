@@ -1,4 +1,5 @@
-import { VStack, Table, Thead, Tbody, Tr, Th, Td, TableCaption, Button } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, TableCaption, Button } from '@chakra-ui/react';
+import { MdRefresh } from 'react-icons/md';
 import { GiftListProps, ResultType } from 'main/typings';
 import { getNextGiftsToSend } from 'renderer/wealthsimple/transformers';
 import Result from './Result';
@@ -18,7 +19,7 @@ const GiftList = ({ data, error, isLoading, isRefetching, refetch }: GiftListPro
   }
 
   return (
-    <VStack>
+    <>
       <Table variant="striped" colorScheme="pink">
         <TableCaption placement="top">Next 10 gifts to send</TableCaption>
         <Thead>
@@ -38,10 +39,10 @@ const GiftList = ({ data, error, isLoading, isRefetching, refetch }: GiftListPro
           ))}
         </Tbody>
       </Table>
-      <Button isLoading={isRefetching} onClick={refetch}>
+      <Button leftIcon={<MdRefresh />} colorScheme="pink" width="100%" isLoading={isRefetching} onClick={refetch}>
         Refetch
       </Button>
-    </VStack>
+    </>
   );
 };
 
