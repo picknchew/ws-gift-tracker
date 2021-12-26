@@ -5,7 +5,7 @@
  */
 const formatPayout = (payout: number): string => {
   const dollars = payout / 100;
-  return dollars.toLocaleString('en-US', { style: 'currency', currency: 'CAD' });
+  return dollars.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' });
 };
 
 export default formatPayout;
