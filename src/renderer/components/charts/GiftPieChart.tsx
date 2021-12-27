@@ -1,8 +1,8 @@
-import { XAxis, YAxis, Tooltip, Area, AreaChart, Line, ResponsiveContainer, ComposedChart, PieChart, Sector, Cell, Pie } from 'recharts';
+import { ResponsiveContainer, PieChart, Sector, Cell, Pie } from 'recharts';
 import { GiftChartProps, Referralv2, ResultType } from 'main/typings';
 import formatPayout from 'renderer/utils/formatPayout';
 import { useState } from 'react';
-import { useTheme } from '@chakra-ui/react';
+import { useTheme, useColorModeValue } from '@chakra-ui/react';
 import Result from '../Result';
 import LoadingIndicator from '../LoadingIndicator';
 import HeaderCard from '../HeaderCard';
@@ -40,12 +40,15 @@ const renderActiveShape = (props: {
   startAngle: number;
   endAngle: number;
   fill: string;
+  labelColor: string;
+  strokeColor: string;
   payload: any;
   percent: number;
   value: any;
 }) => {
   const RADIAN = Math.PI / 180;
-  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
+  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, labelColor, strokeColor, payload, percent, value } = props;
+
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
   const sx = cx + (outerRadius + 10) * cos;
@@ -55,18 +58,28 @@ const renderActiveShape = (props: {
   const ex = mx + (cos >= 0 ? 1 : -1) * 22;
   const ey = my;
   const textAnchor = cos >= 0 ? 'start' : 'end';
+  const formattedAmount = formatPayout(payload.amount);
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {payload.name}
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill} fontWeight="bold">
+        {formattedAmount}
       </text>
-      <Sector cx={cx} cy={cy} innerRadius={innerRadius} outerRadius={outerRadius} startAngle={startAngle} endAngle={endAngle} fill={fill} />
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius + 2}
+        outerRadius={outerRadius + 2}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+        stroke={strokeColor}
+      />
       <Sector cx={cx} cy={cy} startAngle={startAngle} endAngle={endAngle} innerRadius={outerRadius + 6} outerRadius={outerRadius + 10} fill={fill} />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${formatPayout(payload.amount)}`}</text>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill={labelColor} fontWeight="bold">{`${formattedAmount}`}</text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill={labelColor}>
         {`${value} (${(percent * 100).toFixed(2)}%)`}
       </text>
     </g>
@@ -77,6 +90,8 @@ const GiftPieChart = ({ data, error, isLoading, isRefetching }: GiftChartProps) 
   const theme = useTheme();
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const colors = [
+    theme.colors.red[300],
+    theme.colors.orange[300],
     theme.colors.yellow[300],
     theme.colors.green[300],
     theme.colors.teal[300],
@@ -85,6 +100,8 @@ const GiftPieChart = ({ data, error, isLoading, isRefetching }: GiftChartProps) 
     theme.colors.purple[300],
     theme.colors.pink[300],
   ];
+  const labelColor = useColorModeValue(theme.colors.gray[800], theme.colors.gray[100]);
+  const strokeColor = useColorModeValue('white', theme.colors.gray[700]);
   const distributionData = getDistributionData(data);
 
   if (isLoading || isRefetching) {
@@ -112,12 +129,13 @@ const GiftPieChart = ({ data, error, isLoading, isRefetching }: GiftChartProps) 
         >
           <Pie
             activeIndex={activeIndex}
-            activeShape={renderActiveShape}
+            activeShape={(props) => renderActiveShape({ ...props, labelColor, strokeColor })}
             data={distributionData}
             cx="50%"
             cy="50%"
             innerRadius="40%"
             outerRadius="60%"
+            stroke="none"
             dataKey="occurrences"
             onMouseEnter={(_, index: number) => setActiveIndex(index)}
           >
