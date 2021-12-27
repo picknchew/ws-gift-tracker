@@ -58,7 +58,7 @@ const GiftCumulativeChart = ({ data, error, isLoading, isRefetching }: GiftChart
   }
 
   return (
-    <HeaderCard header="Rolling Sum of Total Gift Earnings">
+    <HeaderCard header="Cumulative Sum of Gift Earnings">
       <ResponsiveContainer>
         <ComposedChart
           data={getRollingSumData(data)}
