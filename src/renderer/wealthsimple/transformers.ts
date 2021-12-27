@@ -28,6 +28,42 @@ export const getNextGiftsToSend = (gifters: Array<Referralv2>, count = 10): Arra
   return readyToSend;
 };
 
+export function* getNextGiftsToSendGen(gifters: Array<Referralv2>, count = 10) {
+  let mCount = count;
+  const readyToSend = [];
+  const usersWithin24Hours = new Set(); // keeps track of users that sent gifts within the last 24 hours
+  let total = 0;
+  let i = 0;
+
+  while (i < gifters.length) {
+    while (total < mCount && i < gifters.length) {
+      const payoutTime = new Date(gifters[i].payoutTriggeredAt);
+      const now = new Date();
+      const userHandle = gifters[i].opposingUserProfile?.handle;
+      // if the payout was triggered more than 24 hours ago AND user didn't send within 24h, add to the list
+      if (gifters[i].category === 'payment_gift' && userHandle) {
+        if (now.getTime() - payoutTime.getTime() >= 86400000 && !usersWithin24Hours.has(userHandle)) {
+          readyToSend.push({
+            handle: userHandle ?? 'unknown',
+            timeSinceLastSent: timeSince(payoutTime),
+            timestamp: gifters[i].payoutTriggeredAt,
+          });
+          total += 1;
+        } else {
+          usersWithin24Hours.add(userHandle);
+        }
+      }
+      i += 1;
+    }
+    yield readyToSend;
+    mCount += count; // increment mCount for the next yield
+    // usersWithin24Hours.clear(); // reset the set so the same users may appear on the next page
+  }
+
+  // if we went past gifters.length then there's no more information to parse
+  return readyToSend;
+}
+
 /**
  * Calculates the total payout from gifts and # of gifts since a given date. Defaults to 12 AM of today.
  * @param {Array<Referralv2>} gifters array of gift information
