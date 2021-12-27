@@ -14,7 +14,12 @@ export interface UseReactQueryComponentProps {
   isLoading: boolean;
 }
 
-export interface GiftCumulativeChartProps extends UseReactQueryComponentProps {
+export interface HeaderCardProps {
+  header: string;
+  children?: JSX.Element | JSX.Element[];
+}
+
+export interface GiftChartProps extends UseReactQueryComponentProps {
   data: Array<Referralv2>;
   isRefetching: boolean;
 }

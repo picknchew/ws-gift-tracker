@@ -23,3 +23,8 @@ div::-webkit-scrollbar {
   border-radius: 16px;
   background-color: rgba(0, 0, 0, 0.05);
 }
+
+/* hack to get charts to properly resize */
+.recharts-wrapper {
+  position: absolute !important;
+}
