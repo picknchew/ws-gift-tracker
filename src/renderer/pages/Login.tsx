@@ -143,7 +143,7 @@ const Login = () => {
 
             {showOTP ? (
               <Stack direction="row" justifyContent="space-between">
-                <PinInput otp onComplete={handleOTPSubmit} isInvalid={isOTPInvalid}>
+                <PinInput otp autoFocus onComplete={handleOTPSubmit} isInvalid={isOTPInvalid}>
                   <PinInputField />
                   <PinInputField />
                   <PinInputField />
