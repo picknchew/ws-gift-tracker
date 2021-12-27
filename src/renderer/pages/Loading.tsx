@@ -1,6 +1,6 @@
-import { Center, Spinner } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
+import LoadingIndicator from 'renderer/components/LoadingIndicator';
 
 const Loading = () => {
   const history = useHistory();
@@ -20,11 +20,7 @@ const Loading = () => {
     })();
   }, [history]);
 
-  return (
-    <Center>
-      <Spinner color="red.500" size="xl" />
-    </Center>
-  );
+  return <LoadingIndicator />;
 };
 
 export default Loading;

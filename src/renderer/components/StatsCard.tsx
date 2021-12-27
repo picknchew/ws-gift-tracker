@@ -1,13 +1,15 @@
-import { Text, Circle, Heading, HStack, Stack } from '@chakra-ui/react';
+import { Text, Circle, Heading, HStack, Stack, useColorModeValue } from '@chakra-ui/react';
 import { StatsCardProps } from 'main/typings';
 
 const StatsCard = (props: StatsCardProps) => {
   const { accentColor, icon, data } = props;
   const { label, value } = data;
 
+  const color = useColorModeValue('gray.600', 'gray.400');
+
   return (
     <Stack mx="auto" spacing="3">
-      <Text color="gray.600" fontWeight="medium" whiteSpace="nowrap">
+      <Text color={color} fontWeight="medium" whiteSpace="nowrap">
         {label}
       </Text>
       <HStack spacing="3">

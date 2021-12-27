@@ -6,3 +6,7 @@ contextBridge.exposeInMainWorld('wealthsimple', {
   queryBonuses: () => ipcRenderer.invoke('queryBonuses'),
   isLoggedIn: () => ipcRenderer.invoke('isLoggedIn'),
 });
+
+contextBridge.exposeInMainWorld('chakra', {
+  onToggleColorMode: (cb) => ipcRenderer.on('toggleColorMode', () => cb()),
+});

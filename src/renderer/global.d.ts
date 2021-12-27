@@ -8,8 +8,13 @@ export interface WealthsimpleAPI {
   isLoggedIn: () => Promise<boolean>;
 }
 
+export interface ChakraAPI {
+  onToggleColorMode: (cb: () => void) => void;
+}
+
 declare global {
   interface Window {
     wealthsimple: WealthsimpleAPI;
+    chakra: ChakraAPI;
   }
 }

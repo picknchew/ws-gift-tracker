@@ -1,4 +1,4 @@
-import { Grid, GridItem } from '@chakra-ui/react';
+import { Grid, GridItem, useColorModeValue } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
 import GiftCumulativeChart from 'renderer/components/GiftCumulativeChart';
 import GiftList from 'renderer/components/GiftList';
@@ -10,12 +10,14 @@ const Main = () => {
     return res.data.p2pReferralsv2;
   });
 
+  const bg = useColorModeValue('white', 'gray.800');
+
   return (
     <Grid h="100%" templateRows="repeat(5, 1fr)" templateColumns="repeat(8, 1fr)" gap={4}>
-      <GridItem boxShadow="base" rounded="md" display="flex" colSpan={5} bg="white">
+      <GridItem boxShadow="base" rounded="md" display="flex" colSpan={5} bg={bg}>
         <StatsHeader data={bonusesQuery.data ?? []} error={bonusesQuery.error} isLoading={bonusesQuery.isLoading} isRefetching={bonusesQuery.isRefetching} />
       </GridItem>
-      <GridItem boxShadow="base" rounded="md" p="4" rowSpan={5} colSpan={3} bg="white" overflowY="scroll">
+      <GridItem boxShadow="base" rounded="md" p="4" rowSpan={5} colSpan={3} bg={bg} overflowY="scroll">
         <GiftList
           data={bonusesQuery.data ?? []}
           error={bonusesQuery.error}
@@ -24,7 +26,7 @@ const Main = () => {
           refetch={() => bonusesQuery.refetch()}
         />
       </GridItem>
-      <GridItem boxShadow="base" rounded="md" rowSpan={2} colSpan={5} bg="gray.900">
+      <GridItem boxShadow="base" rounded="md" rowSpan={2} colSpan={5} bg={bg}>
         <GiftCumulativeChart
           data={bonusesQuery.data ?? []}
           error={bonusesQuery.error}
@@ -32,7 +34,7 @@ const Main = () => {
           isRefetching={bonusesQuery.isRefetching}
         />
       </GridItem>
-      <GridItem boxShadow="base" rounded="md" rowSpan={2} colSpan={5} bg="white">
+      <GridItem boxShadow="base" rounded="md" rowSpan={2} colSpan={5} bg={bg}>
         some charts here
       </GridItem>
     </Grid>

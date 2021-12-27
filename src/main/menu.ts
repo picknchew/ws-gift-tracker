@@ -1,4 +1,4 @@
-import { app, Menu, shell, BrowserWindow, MenuItemConstructorOptions } from 'electron';
+import { app, Menu, BrowserWindow, MenuItemConstructorOptions } from 'electron';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -95,7 +95,7 @@ export default class MenuBuilder {
           label: 'Toggle Dark Mode',
           accelerator: 'Ctrl+Command+D',
           click: () => {
-            this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
+            this.mainWindow.webContents.send('toggleColorMode');
           },
         },
         {
@@ -128,7 +128,7 @@ export default class MenuBuilder {
           label: 'Toggle Dark Mode',
           accelerator: 'Ctrl+Command+D',
           click: () => {
-            this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
+            this.mainWindow.webContents.send('toggleColorMode');
           },
         },
         {
@@ -182,7 +182,7 @@ export default class MenuBuilder {
                   label: 'Toggle &Dark Mode',
                   accelerator: 'Ctrl+Shift+D',
                   click: () => {
-                    this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
+                    this.mainWindow.webContents.send('toggleColorMode');
                   },
                 },
                 {
@@ -212,7 +212,7 @@ export default class MenuBuilder {
                   label: 'Toggle &Dark Mode',
                   accelerator: 'Ctrl+Shift+D',
                   click: () => {
-                    this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
+                    this.mainWindow.webContents.send('toggleColorMode');
                   },
                 },
                 {
