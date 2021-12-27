@@ -1,7 +1,6 @@
-import { XAxis, YAxis, Tooltip, Area, Line, ResponsiveContainer, ComposedChart, TooltipProps, Text } from 'recharts';
+import { XAxis, YAxis, Tooltip, Area, Line, ResponsiveContainer, ComposedChart, TooltipProps } from 'recharts';
 import { GiftChartProps, Referralv2, ResultType } from 'main/typings';
 import formatPayout from 'renderer/utils/formatPayout';
-import { Box, Heading } from '@chakra-ui/react';
 import Result from '../Result';
 import LoadingIndicator from '../LoadingIndicator';
 import HeaderCard from '../HeaderCard';
@@ -34,10 +33,12 @@ const getRollingSumData = (bonuses: Array<Referralv2>) => {
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
   if (active && payload && payload[0] && payload[0].value) {
     return (
-      <Box>
-        <Heading size="xs">{label.toLocaleString()}</Heading>
-        <Text fontSize="xs">{formatPayout(payload[0].value)}</Text>
-      </Box>
+      <div>
+        <p>
+          <b>{label.toLocaleString()}</b>
+        </p>
+        <p>{formatPayout(payload[0].value)}</p>
+      </div>
     );
   }
 
