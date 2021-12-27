@@ -100,7 +100,7 @@ const GiftPieChart = ({ data, error, isLoading, isRefetching }: GiftChartProps) 
   }
 
   return (
-    <HeaderCard header="Rolling Sum of Total Gift Earnings">
+    <HeaderCard header="Gift Payout Distribution">
       <ResponsiveContainer>
         <PieChart
           margin={{

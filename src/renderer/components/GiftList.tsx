@@ -74,7 +74,9 @@ const GiftList = ({ data, error, isLoading, isRefetching, refetch }: GiftListPro
   return (
     <Flex flexDir="column">
       <Table>
-        <TableCaption placement="top">Next 10 gifts to send</TableCaption>
+        <TableCaption color="gray.600" fontWeight="bold" textTransform="uppercase" fontFamily="monospace" placement="top">
+          Next 10 gifts to send
+        </TableCaption>
         <Thead>
           <Tr>
             <Th>Username</Th>
@@ -82,7 +84,7 @@ const GiftList = ({ data, error, isLoading, isRefetching, refetch }: GiftListPro
             <Th>Time since</Th>
           </Tr>
         </Thead>
-        <Tbody>
+        <Tbody fontSize="sm">
           {nextGiftsToSend.map((gifter) => (
             <Tr key={`${gifter.handle}${gifter.timestamp}`}>
               <Td>{gifter.handle}</Td>
@@ -93,8 +95,14 @@ const GiftList = ({ data, error, isLoading, isRefetching, refetch }: GiftListPro
         </Tbody>
       </Table>
       <HStack alignSelf="center" flexWrap="wrap" mt="4">
-        <IconButton aria-label="Previous 10 gifts to send" icon={<AiFillCaretLeft />} isLoading={isRefetching} onClick={prevPage} />
-        <Button leftIcon={<MdRefresh />} colorScheme="pink" isLoading={isRefetching} onClick={refetch}>
+        <IconButton
+          isDisabled={pageNumber.current === 0}
+          aria-label="Previous 10 gifts to send"
+          icon={<AiFillCaretLeft />}
+          isLoading={isRefetching}
+          onClick={prevPage}
+        />
+        <Button leftIcon={<MdRefresh />} colorScheme="blue" isLoading={isRefetching} onClick={refetch}>
           Refetch
         </Button>
         <IconButton aria-label="next 10 gifts to send" icon={<AiFillCaretRight />} isLoading={isRefetching} onClick={fetchNextPage} />

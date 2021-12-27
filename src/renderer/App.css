@@ -28,3 +28,9 @@ div::-webkit-scrollbar {
 .recharts-wrapper {
   position: absolute !important;
 }
+
+th,
+td {
+  padding-inline-start: 4px !important;
+  padding-inline-end: 4px !important;
+}
