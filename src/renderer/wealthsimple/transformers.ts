@@ -1,6 +1,7 @@
 import { Gifter, Referralv2 } from 'main/typings';
 import timeSince from 'renderer/utils/timeSince';
 
+// use this to get the first {count} gifts
 export const getNextGiftsToSend = (gifters: Array<Referralv2>, count = 10): Array<Gifter> => {
   const readyToSend = [];
   const usersWithin24Hours = new Set(); // keeps track of users that sent gifts within the last 24 hours
@@ -28,6 +29,7 @@ export const getNextGiftsToSend = (gifters: Array<Referralv2>, count = 10): Arra
   return readyToSend;
 };
 
+// use this to get the next {count} gifts on demand
 export function* getNextGiftsToSendGen(gifters: Array<Referralv2>, count = 10) {
   let mCount = count;
   const readyToSend = [];
@@ -49,15 +51,13 @@ export function* getNextGiftsToSendGen(gifters: Array<Referralv2>, count = 10) {
             timestamp: gifters[i].payoutTriggeredAt,
           });
           total += 1;
-        } else {
-          usersWithin24Hours.add(userHandle);
         }
+        usersWithin24Hours.add(userHandle);
       }
       i += 1;
     }
     yield readyToSend;
     mCount += count; // increment mCount for the next yield
-    // usersWithin24Hours.clear(); // reset the set so the same users may appear on the next page
   }
 
   // if we went past gifters.length then there's no more information to parse

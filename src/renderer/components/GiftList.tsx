@@ -85,6 +85,9 @@ const GiftList = ({ data, error, isLoading, isRefetching, refetch }: GiftListPro
             Next 10 gifts to send
           </Text>
         </TableCaption>
+        <TableCaption placement="bottom">
+          <Text color={color}>Page {pageNumber.current + 1}</Text>
+        </TableCaption>
         <Thead>
           <Tr>
             <Th>Username</Th>
