@@ -1,4 +1,5 @@
 import { XAxis, YAxis, Tooltip, Area, Line, ResponsiveContainer, ComposedChart, TooltipProps } from 'recharts';
+import { useTheme, useColorModeValue } from '@chakra-ui/react';
 import { GiftChartProps, Referralv2, ResultType } from 'main/typings';
 import formatPayout from 'renderer/utils/formatPayout';
 import Result from '../Result';
@@ -46,6 +47,10 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
 };
 
 const GiftCumulativeChart = ({ data, error, isLoading, isRefetching }: GiftChartProps) => {
+  const theme = useTheme();
+  const gradient1Color = useColorModeValue(theme.colors.green[500], theme.colors.green[400]);
+  const gradient2Color = useColorModeValue('white', 'transparent');
+
   if (isLoading || isRefetching) {
     return <LoadingIndicator />;
   }
@@ -71,9 +76,9 @@ const GiftCumulativeChart = ({ data, error, isLoading, isRefetching }: GiftChart
           }}
         >
           <defs>
-            <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#84cf7b" />
-              <stop offset="100%" stopColor="#cae9c8" />
+            <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="5%" stopColor={gradient1Color} stopOpacity={0.8} />
+              <stop offset="95%" stopColor={gradient2Color} stopOpacity={0.2} />
             </linearGradient>
           </defs>
 
@@ -81,7 +86,16 @@ const GiftCumulativeChart = ({ data, error, isLoading, isRefetching }: GiftChart
           <YAxis hide dataKey="amount" />
           <Tooltip content={<CustomTooltip />} />
 
-          <Line type="monotone" strokeLinecap="round" strokeWidth={5} dataKey="amount" stroke="#84cf7b" dot={false} legendType="none" tooltipType="none" />
+          <Line
+            type="monotone"
+            strokeLinecap="round"
+            strokeWidth={2}
+            dataKey="amount"
+            stroke={theme.colors.green[500]}
+            dot={false}
+            legendType="none"
+            tooltipType="none"
+          />
           <Area type="monotone" dataKey="amount" strokeWidth={0} fillOpacity={1} fill="url(#gradient)" />
         </ComposedChart>
       </ResponsiveContainer>
