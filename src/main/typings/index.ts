@@ -17,6 +17,7 @@ export interface UseReactQueryComponentProps {
 export interface HeaderCardProps {
   header: string;
   children?: JSX.Element | JSX.Element[];
+  alignedRight?: JSX.Element;
 }
 
 export interface GiftChartProps extends UseReactQueryComponentProps {

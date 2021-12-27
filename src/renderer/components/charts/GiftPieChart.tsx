@@ -112,7 +112,7 @@ const GiftPieChart = ({ data, error, isLoading, isRefetching }: GiftChartProps) 
     return <Result type={ResultType.Error} headline="Error fetching gift information" message="Couldn't get your gifts, try again." />;
   }
 
-  if (!data) {
+  if (!distributionData) {
     return <Result type={ResultType.Info} headline="No gift information" message="Couldn't find any gift information!" />;
   }
 

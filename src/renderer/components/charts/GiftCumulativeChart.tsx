@@ -50,6 +50,7 @@ const GiftCumulativeChart = ({ data, error, isLoading, isRefetching }: GiftChart
   const theme = useTheme();
   const gradient1Color = useColorModeValue(theme.colors.green[500], theme.colors.green[400]);
   const gradient2Color = useColorModeValue('white', 'transparent');
+  const rollingSumData = getRollingSumData(data);
 
   if (isLoading || isRefetching) {
     return <LoadingIndicator />;
@@ -59,7 +60,7 @@ const GiftCumulativeChart = ({ data, error, isLoading, isRefetching }: GiftChart
     return <Result type={ResultType.Error} headline="Error fetching gift information" message="Couldn't get your gifts, try again." />;
   }
 
-  if (!data) {
+  if (!rollingSumData) {
     return <Result type={ResultType.Info} headline="No gift information" message="Couldn't find any gift information!" />;
   }
 
@@ -67,7 +68,7 @@ const GiftCumulativeChart = ({ data, error, isLoading, isRefetching }: GiftChart
     <HeaderCard header="Cumulative Sum of Gift Earnings">
       <ResponsiveContainer>
         <ComposedChart
-          data={getRollingSumData(data)}
+          data={rollingSumData}
           margin={{
             top: 0,
             right: 0,

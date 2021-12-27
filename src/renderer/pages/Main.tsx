@@ -4,6 +4,7 @@ import GiftCumulativeChart from 'renderer/components/charts/GiftCumulativeChart'
 import GiftList from 'renderer/components/GiftList';
 import StatsHeader from 'renderer/components/StatsHeader';
 import GiftPieChart from 'renderer/components/charts/GiftPieChart';
+import GiftHistoryChart from 'renderer/components/charts/GiftHistoryChart';
 
 const Main = () => {
   const bonusesQuery = useQuery('queryBonuses', async () => {
@@ -38,8 +39,13 @@ const Main = () => {
       <GridItem boxShadow="base" rounded="md" rowSpan={2} colSpan={3} bg={bg}>
         <GiftPieChart data={bonusesQuery.data ?? []} error={bonusesQuery.error} isLoading={bonusesQuery.isLoading} isRefetching={bonusesQuery.isRefetching} />
       </GridItem>
-      <GridItem boxShadow="base" rounded="md" rowSpan={2} colSpan={5} bg="white">
-        some charts here
+      <GridItem boxShadow="base" rounded="md" rowSpan={2} colSpan={5} bg={bg}>
+        <GiftHistoryChart
+          data={bonusesQuery.data ?? []}
+          error={bonusesQuery.error}
+          isLoading={bonusesQuery.isLoading}
+          isRefetching={bonusesQuery.isRefetching}
+        />
       </GridItem>
     </Grid>
   );
