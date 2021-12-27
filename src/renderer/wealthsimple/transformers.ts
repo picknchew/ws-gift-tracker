@@ -3,18 +3,24 @@ import timeSince from 'renderer/utils/timeSince';
 
 export const getNextGiftsToSend = (gifters: Array<Referralv2>, count = 10): Array<Gifter> => {
   const readyToSend = [];
+  const usersWithin24Hours = new Set(); // keeps track of users that sent gifts within the last 24 hours
   let i = 0;
 
   while (readyToSend.length < count && i < gifters.length) {
     const payoutTime = new Date(gifters[i].payoutTriggeredAt);
     const now = new Date();
-    // if the payout was triggered more than 24 hours ago, add to the list
-    if (gifters[i].category === 'payment_gift' && gifters[i].opposingUserProfile && now.getTime() - payoutTime.getTime() >= 86400000) {
-      readyToSend.push({
-        handle: gifters[i].opposingUserProfile?.handle ?? 'unknown',
-        timeSinceLastSent: timeSince(payoutTime),
-        timestamp: gifters[i].payoutTriggeredAt,
-      });
+    const userHandle = gifters[i].opposingUserProfile?.handle;
+    // if the payout was triggered more than 24 hours ago AND user didn't send within 24h, add to the list
+    if (gifters[i].category === 'payment_gift' && userHandle) {
+      if (now.getTime() - payoutTime.getTime() >= 86400000 && !usersWithin24Hours.has(userHandle)) {
+        readyToSend.push({
+          handle: userHandle ?? 'unknown',
+          timeSinceLastSent: timeSince(payoutTime),
+          timestamp: gifters[i].payoutTriggeredAt,
+        });
+      } else {
+        usersWithin24Hours.add(userHandle);
+      }
     }
     i += 1;
   }
