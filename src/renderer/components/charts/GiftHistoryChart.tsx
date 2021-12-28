@@ -5,7 +5,6 @@ import { GiftChartProps, Referralv2, ResultType } from 'main/typings';
 import formatPayout from 'renderer/utils/formatPayout';
 import { useState } from 'react';
 import Result from '../Result';
-import LoadingIndicator from '../LoadingIndicator';
 import HeaderCard from '../HeaderCard';
 
 interface ChartData {
@@ -44,7 +43,7 @@ interface DateRangePickerProps {
 
 const DateRangePicker = ({ dateRange, onRangeChange }: DateRangePickerProps) => {
   return (
-    <ButtonGroup pr={2} pt={2} pb={2} size="sm" isAttached variant="outline">
+    <ButtonGroup size="sm" isAttached variant="outline">
       <Button onClick={() => onRangeChange(DateRange.Day)} isActive={dateRange === DateRange.Day}>
         1D
       </Button>
@@ -140,10 +139,6 @@ const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartPro
     }
   };
 
-  if (isLoading || isRefetching) {
-    return <LoadingIndicator />;
-  }
-
   if (error) {
     return <Result type={ResultType.Error} headline="Error fetching gift information" message="Couldn't get your gifts, try again." />;
   }
@@ -153,7 +148,11 @@ const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartPro
   }
 
   return (
-    <HeaderCard header="Gift Payout History" alignedRight={<DateRangePicker dateRange={dateRange} onRangeChange={setDateRange} />}>
+    <HeaderCard
+      isLoading={isLoading || isRefetching}
+      header="Gift Payout History"
+      alignedRight={<DateRangePicker dateRange={dateRange} onRangeChange={setDateRange} />}
+    >
       <ResponsiveContainer>
         <BarChart
           data={gifts}
@@ -167,7 +166,7 @@ const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartPro
           <XAxis hide reversed dataKey="index" type="number" domain={[0, maxIndex]} allowDataOverflow />
           <YAxis hide dataKey="value" />
 
-          <Bar dataKey="value">
+          <Bar dataKey="value" isAnimationActive={false}>
             {gifts.map((entry) => (
               <Cell key={entry.index} fill={getBarColor(entry)} />
             ))}

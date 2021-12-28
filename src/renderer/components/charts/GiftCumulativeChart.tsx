@@ -3,7 +3,6 @@ import { useTheme, useColorModeValue } from '@chakra-ui/react';
 import { GiftChartProps, Referralv2, ResultType } from 'main/typings';
 import formatPayout from 'renderer/utils/formatPayout';
 import Result from '../Result';
-import LoadingIndicator from '../LoadingIndicator';
 import HeaderCard from '../HeaderCard';
 
 interface ChartData {
@@ -52,10 +51,6 @@ const GiftCumulativeChart = ({ data, error, isLoading, isRefetching }: GiftChart
   const gradient2Color = useColorModeValue('white', 'transparent');
   const rollingSumData = getRollingSumData(data);
 
-  if (isLoading || isRefetching) {
-    return <LoadingIndicator />;
-  }
-
   if (error) {
     return <Result type={ResultType.Error} headline="Error fetching gift information" message="Couldn't get your gifts, try again." />;
   }
@@ -65,7 +60,7 @@ const GiftCumulativeChart = ({ data, error, isLoading, isRefetching }: GiftChart
   }
 
   return (
-    <HeaderCard header="Cumulative Sum of Gift Earnings">
+    <HeaderCard isLoading={isLoading || isRefetching} header="Cumulative Sum of Gift Earnings">
       <ResponsiveContainer>
         <ComposedChart
           data={rollingSumData}

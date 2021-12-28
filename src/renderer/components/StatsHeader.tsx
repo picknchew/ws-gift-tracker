@@ -1,4 +1,4 @@
-import { Stack, HStack, StackDivider, Skeleton, SkeletonCircle, Icon } from '@chakra-ui/react';
+import { Stack, StackDivider, Icon } from '@chakra-ui/react';
 import { FaDollarSign, FaGift } from 'react-icons/fa';
 import { getPayoutFromGifts } from 'renderer/wealthsimple/transformers';
 import { StatsHeaderProps, ResultType } from 'main/typings';
@@ -6,40 +6,7 @@ import formatPayout from 'renderer/utils/formatPayout';
 import StatsCard from './StatsCard';
 import Result from './Result';
 
-const SkeletonStats = () => {
-  return (
-    <Stack mx="auto" spacing="3">
-      <Skeleton height="4" />
-      <HStack spacing="3">
-        <SkeletonCircle size="8" />
-        <Skeleton height="8" width="8rem" />
-      </HStack>
-    </Stack>
-  );
-};
-
 const StatsHeader = ({ data, error, isLoading, isRefetching }: StatsHeaderProps) => {
-  if (isLoading || isRefetching) {
-    return (
-      <Stack
-        spacing="4"
-        px="4"
-        alignItems="center"
-        justify="space-between"
-        direction="row"
-        w="100%"
-        divider={<StackDivider />}
-        overflowX="auto"
-        overflowY="hidden"
-      >
-        <SkeletonStats />
-        <SkeletonStats />
-        <SkeletonStats />
-        <SkeletonStats />
-      </Stack>
-    );
-  }
-
   if (error) {
     return <Result type={ResultType.Error} headline="Error fetching stats information" message="Try again later" />;
   }
@@ -63,14 +30,30 @@ const StatsHeader = ({ data, error, isLoading, isRefetching }: StatsHeaderProps)
       overflowX="auto"
       overflowY="hidden"
     >
-      <StatsCard accentColor="green.500" icon={<Icon as={FaDollarSign} />} data={{ label: 'Total earnings', value: formatPayout(payoutSinceEpoch.payout) }} />
+      <StatsCard
+        accentColor="green.500"
+        icon={<Icon as={FaDollarSign} />}
+        data={{ label: 'Total earnings', value: formatPayout(payoutSinceEpoch.payout) }}
+        isLoading={isLoading || isRefetching}
+      />
       <StatsCard
         accentColor="yellow.500"
         icon={<Icon as={FaDollarSign} />}
         data={{ label: "Today's earnings", value: formatPayout(payoutSinceMidnight.payout) }}
+        isLoading={isLoading || isRefetching}
       />
-      <StatsCard accentColor="green.500" icon={<Icon as={FaGift} />} data={{ label: 'Total gifts', value: payoutSinceEpoch.numGifts }} />
-      <StatsCard accentColor="yellow.500" icon={<Icon as={FaGift} />} data={{ label: "Today's gifts", value: payoutSinceMidnight.numGifts }} />
+      <StatsCard
+        accentColor="green.500"
+        icon={<Icon as={FaGift} />}
+        data={{ label: 'Total gifts', value: payoutSinceEpoch.numGifts }}
+        isLoading={isLoading || isRefetching}
+      />
+      <StatsCard
+        accentColor="yellow.500"
+        icon={<Icon as={FaGift} />}
+        data={{ label: "Today's gifts", value: payoutSinceMidnight.numGifts }}
+        isLoading={isLoading || isRefetching}
+      />
     </Stack>
   );
 };

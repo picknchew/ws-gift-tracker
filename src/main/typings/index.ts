@@ -18,6 +18,7 @@ export interface HeaderCardProps {
   header: string;
   children?: JSX.Element | JSX.Element[];
   alignedRight?: JSX.Element;
+  isLoading?: boolean;
 }
 
 export interface GiftChartProps extends UseReactQueryComponentProps {
@@ -67,6 +68,7 @@ export interface StatsCardProps {
     label: string;
     value: string | number;
   };
+  isLoading?: boolean;
 }
 
 /** Referralsv2Query */

@@ -1,8 +1,7 @@
-import { Text, Circle, Heading, HStack, Stack, useColorModeValue } from '@chakra-ui/react';
+import { Text, Circle, Heading, HStack, Stack, Skeleton, useColorModeValue } from '@chakra-ui/react';
 import { StatsCardProps } from 'main/typings';
 
-const StatsCard = (props: StatsCardProps) => {
-  const { accentColor, icon, data } = props;
+const StatsCard = ({ accentColor, icon, data, isLoading }: StatsCardProps) => {
   const { label, value } = data;
 
   const color = useColorModeValue('gray.600', 'gray.400');
@@ -16,9 +15,11 @@ const StatsCard = (props: StatsCardProps) => {
         <Circle flexShrink={0} size="8" bg={accentColor} color="white">
           {icon}
         </Circle>
-        <Heading as="h1" size="xl" fontWeight="bold" whiteSpace="nowrap">
-          {value}
-        </Heading>
+        <Skeleton isLoaded={!isLoading}>
+          <Heading as="h1" size="xl" fontWeight="bold" whiteSpace="nowrap">
+            {value}
+          </Heading>
+        </Skeleton>
       </HStack>
     </Stack>
   );

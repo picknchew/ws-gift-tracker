@@ -4,7 +4,6 @@ import formatPayout from 'renderer/utils/formatPayout';
 import { useState } from 'react';
 import { useTheme, useColorModeValue } from '@chakra-ui/react';
 import Result from '../Result';
-import LoadingIndicator from '../LoadingIndicator';
 import HeaderCard from '../HeaderCard';
 
 interface ChartData {
@@ -104,10 +103,6 @@ const GiftPieChart = ({ data, error, isLoading, isRefetching }: GiftChartProps) 
   const strokeColor = useColorModeValue('white', theme.colors.gray[700]);
   const distributionData = getDistributionData(data);
 
-  if (isLoading || isRefetching) {
-    return <LoadingIndicator />;
-  }
-
   if (error) {
     return <Result type={ResultType.Error} headline="Error fetching gift information" message="Couldn't get your gifts, try again." />;
   }
@@ -117,7 +112,7 @@ const GiftPieChart = ({ data, error, isLoading, isRefetching }: GiftChartProps) 
   }
 
   return (
-    <HeaderCard header="Gift Payout Distribution">
+    <HeaderCard isLoading={isLoading || isRefetching} header="Gift Payout Distribution">
       <ResponsiveContainer>
         <PieChart
           margin={{
