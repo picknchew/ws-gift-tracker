@@ -7,6 +7,8 @@ export interface IStore {
   tokenType: string;
   accessToken: string;
   refreshToken: string;
+
+  userId: string;
 }
 
 const store = new Store<IStore>();
