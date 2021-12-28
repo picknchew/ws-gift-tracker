@@ -7,7 +7,7 @@ const HeaderCard = ({ header, children, alignedRight }: HeaderCardProps) => {
   return (
     <Flex height="100%" width="100%" direction="column">
       <Flex width="100%" justifyContent="space-between">
-        <Text fontWeight="medium" pt="2" pb="2" pl="4" color={color}>
+        <Text fontWeight="medium" pt="2" pb="2" pl="2" color={color}>
           {header}
         </Text>
 

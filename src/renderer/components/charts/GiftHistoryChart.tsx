@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, TooltipProps, BarChart, Bar, Cell } from 'recharts';
-import { Tab, TabList, Tabs, useTheme } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, UseRadioProps, useColorModeValue, useRadio, useRadioGroup, useTheme, useId } from '@chakra-ui/react';
 import { GiftChartProps, Referralv2, ResultType } from 'main/typings';
 import formatPayout from 'renderer/utils/formatPayout';
 import { useState } from 'react';
@@ -29,18 +30,28 @@ enum DateRange {
 }
 
 interface DateRangePickerProps {
-  onRangeChange: (index: DateRange) => void;
+  onRangeChange: (dateRange: DateRange) => void;
 }
 
 const DateRangePicker = ({ onRangeChange }: DateRangePickerProps) => {
+  const [selectedRange, setSelectedRange] = useState(DateRange.Day);
+  const updateSelectedRange = (dateRange: DateRange) => {
+    setSelectedRange(dateRange);
+    onRangeChange(dateRange);
+  };
+
   return (
-    <Tabs variant="unstyled" colorScheme="blue" onChange={(index) => onRangeChange(index)}>
-      <TabList>
-        <Tab _selected={{ color: 'white', bg: 'blue.500' }}>1D</Tab>
-        <Tab _selected={{ color: 'white', bg: 'blue.500' }}>7D</Tab>
-        <Tab _selected={{ color: 'white', bg: 'blue.500' }}>Max</Tab>
-      </TabList>
-    </Tabs>
+    <ButtonGroup pr={2} pt={2} pb={2} size="sm" isAttached variant="outline">
+      <Button onClick={() => updateSelectedRange(DateRange.Day)} isActive={selectedRange === DateRange.Day}>
+        1D
+      </Button>
+      <Button onClick={() => updateSelectedRange(DateRange.Week)} isActive={selectedRange === DateRange.Week}>
+        7D
+      </Button>
+      <Button onClick={() => updateSelectedRange(DateRange.Max)} isActive={selectedRange === DateRange.Max}>
+        Max
+      </Button>
+    </ButtonGroup>
   );
 };
 
@@ -142,8 +153,9 @@ const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartPro
           <YAxis hide dataKey="payoutAmount" />
 
           <Bar dataKey="payoutAmount">
-            {gifts.map((entry) => (
-              <Cell fill={getBarColor(entry)} />
+            {gifts.map((entry, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <Cell key={index} fill={getBarColor(entry)} />
             ))}
           </Bar>
           <Tooltip content={<CustomTooltip />} />
