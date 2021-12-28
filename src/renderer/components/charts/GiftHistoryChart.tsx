@@ -30,25 +30,20 @@ enum DateRange {
 }
 
 interface DateRangePickerProps {
+  dateRange: DateRange;
   onRangeChange: (dateRange: DateRange) => void;
 }
 
-const DateRangePicker = ({ onRangeChange }: DateRangePickerProps) => {
-  const [selectedRange, setSelectedRange] = useState(DateRange.Day);
-  const updateSelectedRange = (dateRange: DateRange) => {
-    setSelectedRange(dateRange);
-    onRangeChange(dateRange);
-  };
-
+const DateRangePicker = ({ dateRange, onRangeChange }: DateRangePickerProps) => {
   return (
     <ButtonGroup pr={2} pt={2} pb={2} size="sm" isAttached variant="outline">
-      <Button onClick={() => updateSelectedRange(DateRange.Day)} isActive={selectedRange === DateRange.Day}>
+      <Button onClick={() => onRangeChange(DateRange.Day)} isActive={dateRange === DateRange.Day}>
         1D
       </Button>
-      <Button onClick={() => updateSelectedRange(DateRange.Week)} isActive={selectedRange === DateRange.Week}>
+      <Button onClick={() => onRangeChange(DateRange.Week)} isActive={dateRange === DateRange.Week}>
         7D
       </Button>
-      <Button onClick={() => updateSelectedRange(DateRange.Max)} isActive={selectedRange === DateRange.Max}>
+      <Button onClick={() => onRangeChange(DateRange.Max)} isActive={dateRange === DateRange.Max}>
         Max
       </Button>
     </ButtonGroup>
@@ -138,7 +133,7 @@ const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartPro
   }
 
   return (
-    <HeaderCard header="Gift Payout History" alignedRight={<DateRangePicker onRangeChange={setDateRange} />}>
+    <HeaderCard header="Gift Payout History" alignedRight={<DateRangePicker dateRange={dateRange} onRangeChange={setDateRange} />}>
       <ResponsiveContainer>
         <BarChart
           data={gifts}
