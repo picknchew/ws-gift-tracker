@@ -154,7 +154,7 @@ const Login = () => {
               </Stack>
             ) : null}
 
-            <Button colorScheme="pink" variant="solid" type="submit" disabled={showOTP} isLoading={isLoggingIn}>
+            <Button colorScheme="blue" variant="solid" type="submit" disabled={showOTP} isLoading={isLoggingIn}>
               {showOTP ? 'Enter your OTP' : 'Sign in'}
             </Button>
           </Stack>
