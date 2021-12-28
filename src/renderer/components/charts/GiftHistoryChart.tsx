@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, TooltipProps, BarChart, Bar, Cell } from 'recharts';
-import { Box, Button, ButtonGroup, UseRadioProps, useColorModeValue, useRadio, useRadioGroup, useTheme, useId } from '@chakra-ui/react';
+import { Button, ButtonGroup, useTheme } from '@chakra-ui/react';
 import { GiftChartProps, Referralv2, ResultType } from 'main/typings';
 import formatPayout from 'renderer/utils/formatPayout';
 import { useState } from 'react';
