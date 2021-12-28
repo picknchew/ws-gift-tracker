@@ -1,3 +1,5 @@
+export const APP_VERSION = '1.0.0';
+
 export interface AuthContextInterface {
   isAuth: boolean;
   signIn: (email: string, password: string, otp?: string) => Promise<LoginResponse>;
@@ -99,13 +101,12 @@ export interface Referralsv2QueryResponse {
 
 /** OnboardedHome */
 export interface P2PProfile {
-  name: string;
+  name: string | null; // preferred name
   handle: string;
   color: string;
-  imageUrl: string;
+  imageUrl: string | null;
   telephone: string;
-  telephoneHash: string;
-  telephoneVerified: string;
+  telephoneVerified: boolean;
   referralCode: string;
   school: {
     id: string;
@@ -118,9 +119,9 @@ export interface P2PProfile {
 export interface Profile {
   __typename: string;
   id: string;
-  name: string; // preferred name
+  name: string | null; // preferred name
   handle: string;
-  imageUrl: string;
+  imageUrl: string | null;
   color: string;
   telephoneHash: string;
 }
@@ -169,9 +170,9 @@ export interface AmlRecords {
 
 export interface Account {
   id: string;
-  nickname: string;
+  nickname: string | null;
   type: string;
-  investNetLiquidationAmount: number;
+  investNetLiquidationAmount: string; // dollars.cents
   currency: string;
   signedAgreements: Array<{
     id: string;
@@ -180,9 +181,9 @@ export interface Account {
   }>;
   cashAccount: {
     status: string;
-    balance: number;
-    spendingBalance: number;
-    withdrawalBalance: number;
+    balance: number; // in cents
+    spendingBalance: number; // in cents
+    withdrawalBalance: number; // in cents
     __typename: string;
   };
   custodianAccounts: Array<{
@@ -206,11 +207,11 @@ export interface CashClient {
     __typename: string;
   }>;
   onboarding: {
-    states: Array<{
+    states: {
       kyc_application: string;
       email_confirmation: string;
       __typename: string;
-    }>;
+    };
     __typename: string;
   };
   profile: {
@@ -230,7 +231,7 @@ export interface CashClient {
   accounts: Array<Account>;
   spend: {
     id: string;
-    status: string;
+    status: string | null;
     eligibleForSpend: boolean;
     eligibleForCardDrop: boolean;
     __typename: string;
@@ -238,5 +239,7 @@ export interface CashClient {
 }
 
 export interface CashClientDashboardResponse {
-  client: CashClient;
+  data: {
+    client: CashClient;
+  };
 }
