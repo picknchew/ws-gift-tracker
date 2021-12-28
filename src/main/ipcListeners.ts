@@ -1,6 +1,7 @@
 import { ipcMain } from 'electron';
 import { getTokenInfo, login, isLoggedIn } from './wealthsimple/auth';
 import queryBonuses from './wealthsimple/bonuses';
+import queryDashboard from './wealthsimple/dashboard';
 
 ipcMain.handle('login', async (_event, username, password, otp?) => {
   const res = await login(username, password, otp);
@@ -14,6 +15,11 @@ ipcMain.handle('getTokenInfo', async (_event) => {
 
 ipcMain.handle('queryBonuses', async () => {
   const res = await queryBonuses();
+  return res;
+});
+
+ipcMain.handle('queryDashboard', async () => {
+  const res = await queryDashboard();
   return res;
 });
 

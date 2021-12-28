@@ -52,7 +52,7 @@ const login = async (username: string, password: string, otp?: string) => {
   store.set('tokenType', res.data.token_type);
   store.set('accessToken', res.data.access_token);
   store.set('refreshToken', res.data.refresh_token);
-  store.set('userId', res.data.profiles.trade.default);
+  store.set('userId', res.data.canonical_user_id);
 
   return LoginResponse.Success;
 };

@@ -1,5 +1,6 @@
 import axios, { AxiosRequestHeaders } from 'axios';
 import { CashClientDashboardResponse } from 'main/typings';
+import store from '../store';
 
 const dashboardEndpoint = 'https://api-legacy.wealthsimple.com/graphql';
 
@@ -100,20 +101,15 @@ fragment AmlRecords on Client {
 }
 `;
 
-const queryDashboard = async (clientId: string) => {
-  const headers: AxiosRequestHeaders = { 'Content-Type': 'application/json', Accept: 'application/json' };
-
-  const res = await axios.post<CashClientDashboardResponse>(
-    dashboardEndpoint,
-    {
-      operationName: 'CashClientDashboard',
-      query: DASHBOARD_QUERY,
-      variables: {
-        clientId,
-      },
+const queryDashboard = async () => {
+  const clientId = store.get('userId');
+  const res = await axios.post<CashClientDashboardResponse>(dashboardEndpoint, {
+    operationName: 'CashClientDashboard',
+    query: DASHBOARD_QUERY,
+    variables: {
+      clientId,
     },
-    { headers }
-  );
+  });
 
   return res.data;
 };
