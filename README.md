@@ -25,3 +25,8 @@ npm start
 ```
 npm run package
 ```
+
+## Screenshots
+
+![Light mode](./screenshots/lightmode.png?raw=true)
+![Dark mode](./screenshots/darkmode.png?raw=true)
