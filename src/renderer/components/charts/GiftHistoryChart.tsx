@@ -3,7 +3,7 @@ import { XAxis, YAxis, Tooltip, ResponsiveContainer, TooltipProps, BarChart, Bar
 import { Button, ButtonGroup, useTheme } from '@chakra-ui/react';
 import { GiftChartProps, Referralv2, ResultType } from 'main/typings';
 import formatPayout from 'renderer/utils/formatPayout';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Result from '../Result';
 import LoadingIndicator from '../LoadingIndicator';
 import HeaderCard from '../HeaderCard';
@@ -16,6 +16,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
           <b>{new Date(label).toLocaleString()}</b>
         </p>
         <p>{formatPayout(payload[0].value)}</p>
+        <p>{payload[0].payload?.opposingUserProfile?.handle}</p>
       </div>
     );
   }
@@ -94,8 +95,20 @@ const filterGiftsForRange = (bonuses: Array<Referralv2>, dateRange: DateRange) =
 const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartProps) => {
   const theme = useTheme();
   const [dateRange, setDateRange] = useState(DateRange.Day);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [hack, setHack] = useState<boolean>(false); // to force re render
+  const cachedDateRanges = useRef<Array<Array<Referralv2>>>([[], [], []]);
 
-  const gifts = filterGiftsForRange(data, dateRange);
+  // cache date range data
+  useEffect(() => {
+    if (data?.length > 0) {
+      if (cachedDateRanges.current[dateRange].length === 0) {
+        cachedDateRanges.current[dateRange] = filterGiftsForRange(data, dateRange);
+        // force a re-render whenever cachedDateRanges changes
+        setHack((state) => !state);
+      }
+    }
+  }, [data, dateRange]);
 
   const getBarColor = (entry: Referralv2) => {
     switch (entry.payoutAmount) {
@@ -128,7 +141,7 @@ const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartPro
     return <Result type={ResultType.Error} headline="Error fetching gift information" message="Couldn't get your gifts, try again." />;
   }
 
-  if (!gifts) {
+  if (cachedDateRanges.current[DateRange.Day]?.length === 0) {
     return <Result type={ResultType.Info} headline="No gift information" message="Couldn't find any gift information!" />;
   }
 
@@ -136,7 +149,7 @@ const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartPro
     <HeaderCard header="Gift Payout History" alignedRight={<DateRangePicker dateRange={dateRange} onRangeChange={setDateRange} />}>
       <ResponsiveContainer>
         <BarChart
-          data={gifts}
+          data={cachedDateRanges.current[dateRange]}
           margin={{
             top: 10,
             right: 0,
@@ -147,8 +160,8 @@ const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartPro
           <XAxis hide dataKey="payoutTriggeredAt" />
           <YAxis hide dataKey="payoutAmount" />
 
-          <Bar dataKey="payoutAmount">
-            {gifts.map((entry, index) => (
+          <Bar dataKey="payoutAmount" isAnimationActive={false}>
+            {cachedDateRanges.current[dateRange]?.map((entry, index) => (
               // eslint-disable-next-line react/no-array-index-key
               <Cell key={index} fill={getBarColor(entry)} />
             ))}
