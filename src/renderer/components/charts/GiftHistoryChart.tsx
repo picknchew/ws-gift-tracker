@@ -3,20 +3,27 @@ import { XAxis, YAxis, Tooltip, ResponsiveContainer, TooltipProps, BarChart, Bar
 import { Button, ButtonGroup, useTheme } from '@chakra-ui/react';
 import { GiftChartProps, Referralv2, ResultType } from 'main/typings';
 import formatPayout from 'renderer/utils/formatPayout';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import Result from '../Result';
 import LoadingIndicator from '../LoadingIndicator';
 import HeaderCard from '../HeaderCard';
 
-const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+interface ChartData {
+  index: number;
+  timestamp: number;
+  value: number;
+  name: string;
+}
+
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   if (active && payload && payload[0] && payload[0].value) {
     return (
       <div>
         <p>
-          <b>{new Date(label).toLocaleString()}</b>
+          <b>{new Date(payload[0].payload?.timestamp).toLocaleString()}</b>
         </p>
         <p>{formatPayout(payload[0].value)}</p>
-        <p>{payload[0].payload?.opposingUserProfile?.handle}</p>
+        <p>{payload[0].payload?.name}</p>
       </div>
     );
   }
@@ -53,16 +60,16 @@ const DateRangePicker = ({ dateRange, onRangeChange }: DateRangePickerProps) => 
 
 const DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
 
-const filterGiftsForRange = (bonuses: Array<Referralv2>, dateRange: DateRange) => {
+const getMaxIndexForRange = (data: Array<ChartData>, dateRange: DateRange) => {
   const now = new Date();
   let giftsAfter;
 
   switch (dateRange) {
     case DateRange.Day:
-      giftsAfter = new Date(now.getTime() - 1 * DAY_IN_MILLIS);
+      giftsAfter = now.getTime() - 1 * DAY_IN_MILLIS;
       break;
     case DateRange.Week:
-      giftsAfter = new Date(now.getTime() - 7 * DAY_IN_MILLIS);
+      giftsAfter = now.getTime() - 7 * DAY_IN_MILLIS;
       break;
     case DateRange.Max:
     default:
@@ -70,48 +77,48 @@ const filterGiftsForRange = (bonuses: Array<Referralv2>, dateRange: DateRange) =
   }
 
   if (!giftsAfter) {
-    return bonuses.filter((bonus) => bonus.category === 'payment_gift').reverse();
+    return data.length;
   }
 
-  const gifts = [];
-
-  for (let i = 0; i < bonuses.length; i += 1) {
-    const bonus = bonuses[i];
-
+  for (let i = 0; i < data.length; i += 1) {
     // bonuses is in descending order, so stop at first date that is not in range
-    if (new Date(bonus.payoutTriggeredAt) < giftsAfter) {
-      return gifts.reverse();
-    }
-
-    if (bonus.category === 'payment_gift') {
-      gifts.push(bonus);
+    if (data[i].timestamp < giftsAfter) {
+      return i - 1;
     }
   }
 
   // ascending order
-  return gifts.reverse();
+  return data.length;
+};
+
+const getHistoricalData = (bonuses: Array<Referralv2>): Array<ChartData> => {
+  const data = [];
+
+  for (let i = 0; i < bonuses.length; i += 1) {
+    const bonus = bonuses[i];
+
+    if (bonus.category === 'payment_gift') {
+      data.push({
+        index: i,
+        timestamp: new Date(bonus.payoutTriggeredAt).getTime(),
+        value: bonus.payoutAmount,
+        name: bonus.opposingUserProfile?.handle ?? 'unknown',
+      });
+    }
+  }
+
+  return data;
 };
 
 const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartProps) => {
   const theme = useTheme();
   const [dateRange, setDateRange] = useState(DateRange.Day);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [hack, setHack] = useState<boolean>(false); // to force re render
-  const cachedDateRanges = useRef<Array<Array<Referralv2>>>([[], [], []]);
 
-  // cache date range data
-  useEffect(() => {
-    if (data?.length > 0) {
-      if (cachedDateRanges.current[dateRange].length === 0) {
-        cachedDateRanges.current[dateRange] = filterGiftsForRange(data, dateRange);
-        // force a re-render whenever cachedDateRanges changes
-        setHack((state) => !state);
-      }
-    }
-  }, [data, dateRange]);
+  const gifts = getHistoricalData(data);
+  const maxIndex = getMaxIndexForRange(gifts, dateRange);
 
-  const getBarColor = (entry: Referralv2) => {
-    switch (entry.payoutAmount) {
+  const getBarColor = (entry: ChartData) => {
+    switch (entry.value) {
       case 10:
         return theme.colors.red[400];
       case 25:
@@ -141,7 +148,7 @@ const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartPro
     return <Result type={ResultType.Error} headline="Error fetching gift information" message="Couldn't get your gifts, try again." />;
   }
 
-  if (cachedDateRanges.current[DateRange.Day]?.length === 0) {
+  if (maxIndex === -1) {
     return <Result type={ResultType.Info} headline="No gift information" message="Couldn't find any gift information!" />;
   }
 
@@ -149,7 +156,7 @@ const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartPro
     <HeaderCard header="Gift Payout History" alignedRight={<DateRangePicker dateRange={dateRange} onRangeChange={setDateRange} />}>
       <ResponsiveContainer>
         <BarChart
-          data={cachedDateRanges.current[dateRange]}
+          data={gifts}
           margin={{
             top: 10,
             right: 0,
@@ -157,13 +164,12 @@ const GiftHistoryChart = ({ data, error, isLoading, isRefetching }: GiftChartPro
             bottom: 0,
           }}
         >
-          <XAxis hide dataKey="payoutTriggeredAt" />
-          <YAxis hide dataKey="payoutAmount" />
+          <XAxis hide reversed dataKey="index" type="number" domain={[0, maxIndex]} allowDataOverflow />
+          <YAxis hide dataKey="value" />
 
-          <Bar dataKey="payoutAmount" isAnimationActive={false}>
-            {cachedDateRanges.current[dateRange]?.map((entry, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <Cell key={index} fill={getBarColor(entry)} />
+          <Bar dataKey="value">
+            {gifts.map((entry) => (
+              <Cell key={entry.index} fill={getBarColor(entry)} />
             ))}
           </Bar>
           <Tooltip content={<CustomTooltip />} />
