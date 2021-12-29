@@ -27,6 +27,10 @@ const SidebarContent = ({ data, error, isLoading, isRefetching, refetch }: Sideb
   const appNameColor = useColorModeValue('blue.600', 'blue.400');
   const subtextColor = useColorModeValue('gray.600', 'gray.400');
 
+  // there can be multiple accounts (ca_cash vs. ca_cash_msb)
+  // apparently the ca_cash_msb is the correct account to use
+  const msbAccount = data?.accounts.find((account) => account.type === 'ca_cash_msb');
+
   return (
     <>
       <Flex direction="column" borderLeftWidth="1px" width="full" height="full" bg="inherit" border="0">
@@ -42,7 +46,7 @@ const SidebarContent = ({ data, error, isLoading, isRefetching, refetch }: Sideb
               <Text size="sm" color={subtextColor}>
                 Available funds
               </Text>
-              <Heading>{formatPayout(data?.accounts[0]?.cashAccount.spendingBalance)}</Heading>
+              <Heading>{formatPayout(msbAccount?.cashAccount.spendingBalance)}</Heading>
             </VStack>
           </SidebarContentWrapper>
         </VStack>
