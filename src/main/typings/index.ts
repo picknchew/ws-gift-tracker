@@ -1,3 +1,5 @@
+import { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from 'react-query';
+
 export const APP_VERSION = '1.0.0';
 
 export interface AuthContextInterface {
@@ -71,6 +73,19 @@ export interface StatsCardProps {
     value: string | number;
   };
   isLoading?: boolean;
+}
+
+export interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export interface SidebarContentProps {
+  data?: CashClient;
+  error: unknown;
+  isLoading: boolean;
+  isRefetching: boolean;
+  refetch: <TPageData>(options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined) => Promise<QueryObserverResult<CashClient, unknown>>;
 }
 
 /** Referralsv2Query */
