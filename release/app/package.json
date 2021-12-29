@@ -1,6 +1,6 @@
 {
   "name": "ws-gift-tracker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "An unofficial app to track gifts for Wealthsimple's holiday gifting event",
   "main": "./dist/main/main.js",
   "author": {
