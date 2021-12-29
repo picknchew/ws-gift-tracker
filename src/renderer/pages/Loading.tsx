@@ -5,7 +5,7 @@ import LoadingIndicator from 'renderer/components/LoadingIndicator';
 
 const Loading = () => {
   const history = useHistory();
-  const { isLoggedIn, getTokenInfo } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -13,14 +13,14 @@ const Loading = () => {
 
       if (loggedIn) {
         // mimic ws behavior
-        await getTokenInfo();
+        await window.wealthsimple.getTokenInfo();
         history.push('/app');
         return;
       }
 
       history.push('/login');
     })();
-  }, [history, isLoggedIn, getTokenInfo]);
+  }, [history, isLoggedIn]);
 
   return <LoadingIndicator />;
 };

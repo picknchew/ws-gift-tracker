@@ -30,19 +30,10 @@ export const useProvideAuth = () => {
     return isLoggedInResponse;
   };
 
-  const getTokenInfo = async () => {
-    const tokenInfo = await window.wealthsimple.getTokenInfo();
-    if (tokenInfo.authenticated) {
-      setIsAuth(true);
-    }
-    return tokenInfo;
-  };
-
   // Return the user object and auth methods
   return {
     isAuth,
     signIn,
     isLoggedIn,
-    getTokenInfo,
   };
 };

@@ -1,5 +1,4 @@
-import { LoginResponse, Referralsv2QueryResponse, CashClientDashboardResponse } from 'main/typings';
-import { TokenInfo } from 'main/wealthsimple/auth';
+import { LoginResponse, Referralsv2QueryResponse, CashClientDashboardResponse, TokenInfo } from 'main/typings';
 
 export interface WealthsimpleAPI {
   login: (username: string, password: string, otp?: string) => Promise<LoginResponse>;

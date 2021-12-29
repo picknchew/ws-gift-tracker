@@ -6,7 +6,6 @@ export interface AuthContextInterface {
   isAuth: boolean;
   signIn: (email: string, password: string, otp?: string) => Promise<LoginResponse>;
   isLoggedIn: () => Promise<boolean>;
-  getTokenInfo: () => Promise<TokenInfo>;
 }
 
 export type Gifter = {
