@@ -22,9 +22,27 @@ export const useProvideAuth = () => {
     return signInResponse;
   };
 
+  const isLoggedIn = async () => {
+    const isLoggedInResponse = await window.wealthsimple.isLoggedIn();
+    if (isLoggedInResponse) {
+      setIsAuth(true);
+    }
+    return isLoggedInResponse;
+  };
+
+  const getTokenInfo = async () => {
+    const tokenInfo = await window.wealthsimple.getTokenInfo();
+    if (tokenInfo.authenticated) {
+      setIsAuth(true);
+    }
+    return tokenInfo;
+  };
+
   // Return the user object and auth methods
   return {
     isAuth,
     signIn,
+    isLoggedIn,
+    getTokenInfo,
   };
 };

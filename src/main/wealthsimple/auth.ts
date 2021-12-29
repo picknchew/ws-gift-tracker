@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
-import { LoginResponse, RefreshAccessTokenResponse } from '../typings';
+import { LoginResponse, RefreshAccessTokenResponse, TokenInfo } from '../typings';
 import store from '../store';
 
 const authEndpoint = 'https://api.production.wealthsimple.com/v1/oauth/token';
@@ -56,11 +56,6 @@ const login = async (username: string, password: string, otp?: string) => {
 
   return LoginResponse.Success;
 };
-
-export interface TokenInfo {
-  authenticated: boolean;
-  expiresIn: number; // in seconds
-}
 
 // call to get info about saved session
 const getTokenInfo = async (): Promise<TokenInfo> => {

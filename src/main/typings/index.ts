@@ -5,6 +5,8 @@ export const APP_VERSION = '1.0.0';
 export interface AuthContextInterface {
   isAuth: boolean;
   signIn: (email: string, password: string, otp?: string) => Promise<LoginResponse>;
+  isLoggedIn: () => Promise<boolean>;
+  getTokenInfo: () => Promise<TokenInfo>;
 }
 
 export type Gifter = {
@@ -53,6 +55,11 @@ export enum RefreshAccessTokenResponse {
   UnknownError,
   InvalidRefreshToken,
   Success,
+}
+
+export interface TokenInfo {
+  authenticated: boolean;
+  expiresIn: number; // in seconds
 }
 
 export enum QueryResponse {
