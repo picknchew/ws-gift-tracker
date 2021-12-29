@@ -5,11 +5,22 @@ A desktop app to track the gifts you've received during the Wealthsimple Cash x 
 [Download](https://github.com/picknchew/ws-gift-tracker/releases) (only Windows binaries are available, macOS and Linux binaries can be built following the instructions below)
 
 ## Features
-- List of who you should send a gift to next
-- Breakdown of the frequency of each prize you received
-- Historical view of all the gifts you received
-- Number of gifts you've received and total money made from the event
-- Current Wealthsimple Cash account balance
+🎁 List of who you should send a gift to next
+
+📊 Breakdown of the frequency of each prize you received
+
+🔮 Historical view of all the gifts you received
+
+📈 Number of gifts you've received and total money made from the event
+
+💸 Current Wealthsimple Cash account balance
+
+🌙 Light mode and dark mode
+
+## Screenshots (light and dark mode)
+
+![Light mode](./screenshots/lightmode.png?raw=true)
+![Dark mode](./screenshots/darkmode.png?raw=true)
 
 ## Development
 
@@ -32,8 +43,3 @@ npm start
 ```
 npm run package
 ```
-
-## Screenshots
-
-![Light mode](./screenshots/lightmode.png?raw=true)
-![Dark mode](./screenshots/darkmode.png?raw=true)
